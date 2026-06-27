@@ -48,8 +48,8 @@ float funnel_shape(vec2 uv, float top_w, float bot_w, float height, float center
 
 void main() {
     vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-    vec3 bg = vec3(0.047, 0.082, 0.059); // Obsidian surface-container-lowest
-    vec3 accent = vec3(0.145, 0.827, 0.4); // #25D366
+    vec3 bg = vec3(0.04, 0.04, 0.04); // #0A0A0A
+    vec3 accent = vec3(1.0, 1.0, 1.0); // #FFFFFF
     
     // Funnel Stages
     float s1 = funnel_shape(uv, 0.8, 0.6, 0.15, 0.8);
@@ -57,17 +57,17 @@ void main() {
     float s3 = funnel_shape(uv, 0.35, 0.25, 0.15, 0.4);
     float s4 = funnel_shape(uv, 0.2, 0.15, 0.15, 0.2);
     
-    float pulse = 0.8 + 0.2 * sin(u_time * 2.0);
+    float pulse = 0.9 + 0.1 * sin(u_time * 2.0);
     
     vec3 color = bg;
     
-    if (s1 > 0.5) color = mix(bg, accent, 0.4 * pulse);
-    if (s2 > 0.5) color = mix(bg, accent, 0.6 * pulse);
-    if (s3 > 0.5) color = mix(bg, accent, 0.8 * pulse);
+    if (s1 > 0.5) color = mix(bg, accent, 0.1 * pulse);
+    if (s2 > 0.5) color = mix(bg, accent, 0.25 * pulse);
+    if (s3 > 0.5) color = mix(bg, accent, 0.5 * pulse);
     if (s4 > 0.5) color = accent * pulse;
     
     // Add subtle scanline/grid effect
-    float grid = sin(uv.y * 100.0) * 0.02;
+    float grid = sin(uv.y * 100.0) * 0.01;
     color += grid;
 
     gl_FragColor = vec4(color, 1.0);

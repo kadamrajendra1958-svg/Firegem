@@ -70,7 +70,7 @@ export default function MeetingDetailLayout({ children }: { children: React.Reac
             <Download className="w-4 h-4" />
             Export
           </button>
-          <button className="px-5 py-2 rounded-lg bg-primary text-primary-foreground font-bold flex items-center gap-2 hover:brightness-110 transition-all shadow-[0_0_15px_rgba(37,211,102,0.2)]">
+          <button className="px-5 py-2 rounded-lg bg-primary text-primary-foreground font-bold flex items-center gap-2 hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)]">
             <PlayCircle className="w-4 h-4" />
             Play Recording
           </button>

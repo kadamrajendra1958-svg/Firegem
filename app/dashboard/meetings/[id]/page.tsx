@@ -18,11 +18,7 @@ import {
 } from "lucide-react";
 
 export default function MeetingSummaryPage() {
-  const [tasks, setTasks] = useState([
-    { id: 1, title: "Send implementation roadmap document", assignee: "Sarah Chen", due: "Due in 2 days", completed: false },
-    { id: 2, title: "Schedule technical deep-dive with Engineering", assignee: "David Miller", due: "Urgent", completed: false },
-    { id: 3, title: "Update Salesforce opportunity stage to \"Selection\"", assignee: "Sarah Chen", due: "Complete by EOD", completed: false },
-  ]);
+  const [tasks, setTasks] = useState<any[]>([]);
 
   const toggleTask = (id: number) => {
     setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
@@ -66,32 +62,31 @@ export default function MeetingSummaryPage() {
                 <h3 className="text-2xl font-bold text-on-surface">Executive Overview</h3>
               </div>
               <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(37,211,102,0.8)]"></span>
-                <span className="text-xs font-bold text-on-surface-variant">98% Confidence</span>
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
+                <span className="text-xs font-bold text-on-surface-variant">Waiting</span>
               </div>
             </div>
-            <p className="text-lg leading-relaxed text-on-surface-variant font-medium">
-              The client is highly engaged and viewed the demonstration as a "mission-critical" upgrade to their existing tech stack. Significant emphasis was placed on <span className="text-primary font-bold">revenue recapture</span> and automation of manual entry processes. Initial stakeholder buy-in is confirmed from both Finance and Engineering leads.
+            <p className="text-lg leading-relaxed text-on-surface-variant font-medium text-center py-8">
+              No executive overview generated yet.
             </p>
             
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-white/5 pt-8">
               <div>
                 <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Sentiment</p>
-                <p className="text-primary font-bold flex items-center gap-2 text-sm">
-                  <Smile className="w-5 h-5" /> Highly Positive
+                <p className="text-on-surface-variant font-bold flex items-center gap-2 text-sm">
+                  --
                 </p>
               </div>
               <div>
                 <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Priority</p>
-                <p className="text-white font-bold flex items-center gap-2 text-sm">
-                  <AlertCircle className="w-5 h-5 text-tertiary" /> Critical Expansion
+                <p className="text-on-surface-variant font-bold flex items-center gap-2 text-sm">
+                  --
                 </p>
               </div>
               <div>
                 <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Stakeholders</p>
                 <div className="flex -space-x-2">
-                  <div className="w-8 h-8 rounded-full border-2 border-surface bg-surface-container-highest"></div>
-                  <div className="w-8 h-8 rounded-full border-2 border-surface bg-primary/20 flex items-center justify-center text-[10px] font-bold text-primary">+4</div>
+                  --
                 </div>
               </div>
             </div>
@@ -108,20 +103,20 @@ export default function MeetingSummaryPage() {
               <Banknote className="w-8 h-8 text-tertiary" />
               <div className="text-right">
                 <p className="text-xs font-bold text-on-surface-variant">Confidence Score</p>
-                <p className="text-tertiary font-bold text-sm">95%</p>
+                <p className="text-tertiary font-bold text-sm">0%</p>
               </div>
             </div>
             <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Budget Extraction</h3>
-            <p className="text-3xl font-bold text-primary tracking-tight mb-2">$1.2M Allocated</p>
+            <p className="text-3xl font-bold text-on-surface-variant tracking-tight mb-2">Pending</p>
             
             <div className="space-y-4 mt-8">
               <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
                 <span className="text-sm font-medium text-on-surface-variant">Approval Status</span>
-                <span className="text-primary font-bold text-sm">Confirmed</span>
+                <span className="text-on-surface-variant font-bold text-sm">--</span>
               </div>
               <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
                 <span className="text-sm font-medium text-on-surface-variant">Fiscal Window</span>
-                <span className="text-white font-bold text-sm">Q4 Priority</span>
+                <span className="text-on-surface-variant font-bold text-sm">--</span>
               </div>
             </div>
           </motion.div>
@@ -137,29 +132,9 @@ export default function MeetingSummaryPage() {
               <CheckSquare className="w-6 h-6 text-secondary" />
               <h3 className="text-xl font-bold text-on-surface">Technical Needs</h3>
             </div>
-            <ul className="space-y-5">
-              <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-white font-bold text-sm">API Access</p>
-                  <p className="text-xs text-on-surface-variant mt-0.5 font-medium">Full RESTful endpoint documentation</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-white font-bold text-sm">SSO / SAML 2.0</p>
-                  <p className="text-xs text-on-surface-variant mt-0.5 font-medium">Okta integration is a hard requirement</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-white font-bold text-sm">Salesforce Sync</p>
-                  <p className="text-xs text-on-surface-variant mt-0.5 font-medium">Bi-directional object mapping</p>
-                </div>
-              </li>
-            </ul>
+            <div className="py-8 text-center text-on-surface-variant">
+              No technical requirements extracted.
+            </div>
           </motion.div>
 
           {/* 4. Pain Points */}
@@ -173,17 +148,8 @@ export default function MeetingSummaryPage() {
               <AlertOctagon className="w-6 h-6 text-error" />
               <h3 className="text-xl font-bold text-on-surface">Identified Pains</h3>
             </div>
-            <div className="space-y-6">
-              <div className="relative pl-5 border-l-2 border-error/40">
-                <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Leakage</p>
-                <p className="text-white font-bold text-lg">30% Revenue Leakage</p>
-                <p className="text-sm text-on-surface-variant mt-1 font-medium">Manual attribution leads to missed renewals.</p>
-              </div>
-              <div className="relative pl-5 border-l-2 border-error/40">
-                <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Efficiency</p>
-                <p className="text-white font-bold text-lg">Manual Data Entry</p>
-                <p className="text-sm text-on-surface-variant mt-1 font-medium">Ops team spends 15hrs/week on Salesforce updates.</p>
-              </div>
+            <div className="py-8 text-center text-on-surface-variant">
+              No pain points identified.
             </div>
           </motion.div>
 
@@ -199,32 +165,8 @@ export default function MeetingSummaryPage() {
             </div>
             <h3 className="text-xl font-bold text-on-surface mb-8">Delivery Timeline</h3>
             
-            <div className="space-y-8 relative">
-              <div className="absolute left-[11px] top-2 bottom-2 w-px bg-white/10"></div>
-              
-              <div className="flex gap-5 relative z-10">
-                <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] font-bold text-background shrink-0">1</div>
-                <div>
-                  <p className="text-white font-bold text-sm">POC Start</p>
-                  <p className="text-primary text-xs font-bold mt-1">Nov 15, 2023</p>
-                </div>
-              </div>
-              
-              <div className="flex gap-5 relative z-10">
-                <div className="w-6 h-6 rounded-full bg-surface-container-highest border border-white/20 flex items-center justify-center text-[10px] font-bold text-white shrink-0">2</div>
-                <div>
-                  <p className="text-on-surface-variant font-bold text-sm">Review Phase</p>
-                  <p className="text-on-surface-variant text-xs font-medium mt-1">Dec 10, 2023</p>
-                </div>
-              </div>
-              
-              <div className="flex gap-5 relative z-10">
-                <div className="w-6 h-6 rounded-full bg-surface-container-highest border border-white/20 flex items-center justify-center text-[10px] font-bold text-white shrink-0">3</div>
-                <div>
-                  <p className="text-on-surface-variant font-bold text-sm">Full Rollout</p>
-                  <p className="text-on-surface-variant text-xs font-medium mt-1">Jan 01, 2024</p>
-                </div>
-              </div>
+            <div className="py-8 text-center text-on-surface-variant">
+              No timeline generated.
             </div>
           </motion.div>
 
@@ -240,22 +182,8 @@ export default function MeetingSummaryPage() {
               <h3 className="text-xl font-bold text-on-surface">Crucial Objections</h3>
             </div>
             
-            <div className="space-y-4">
-              <div className="bg-surface-container-highest p-5 rounded-xl border border-white/5">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-bold text-white text-sm">Security Review</span>
-                  <span className="bg-error/20 text-error px-2 py-1 rounded-md text-[10px] uppercase font-bold tracking-wider">High Risk</span>
-                </div>
-                <p className="text-sm text-on-surface-variant font-medium">Procurement requires a SOC2 Type II audit report before sign-off.</p>
-              </div>
-              
-              <div className="bg-surface-container-highest p-5 rounded-xl border border-white/5">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-bold text-white text-sm">Competitor X Pricing</span>
-                  <span className="bg-[#FFB000]/20 text-[#FFB000] px-2 py-1 rounded-md text-[10px] uppercase font-bold tracking-wider">Moderate</span>
-                </div>
-                <p className="text-sm text-on-surface-variant font-medium">Mentioned "CloudRevenue" bundle pricing is 15% lower than our list price.</p>
-              </div>
+            <div className="py-8 text-center text-on-surface-variant">
+              No objections noted.
             </div>
           </motion.div>
 
@@ -271,38 +199,11 @@ export default function MeetingSummaryPage() {
                 <CheckCircle2 className="w-6 h-6 text-primary" />
                 <h3 className="text-xl font-bold text-on-surface">Action Items</h3>
               </div>
-              <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">{tasks.length} Total Tasks</span>
+              <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">0 Total Tasks</span>
             </div>
             
-            <div className="space-y-3">
-              {tasks.map(task => (
-                <div 
-                  key={task.id}
-                  onClick={() => toggleTask(task.id)}
-                  className={`flex items-center gap-4 p-5 rounded-xl transition-colors cursor-pointer group ${
-                    task.completed ? 'bg-primary/5 border border-primary/20' : 'hover:bg-white/5 border border-transparent bg-surface-container-highest'
-                  }`}
-                >
-                  <div className={`w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all shrink-0 ${
-                    task.completed 
-                      ? 'bg-primary border-primary text-background' 
-                      : 'border-primary/40 group-hover:border-primary text-transparent'
-                  }`}>
-                    {task.completed && <Check className="w-4 h-4" />}
-                  </div>
-                  
-                  <div className="flex-1">
-                    <p className={`font-bold transition-colors text-sm ${task.completed ? 'text-on-surface-variant line-through' : 'text-white'}`}>
-                      {task.title}
-                    </p>
-                    <p className="text-xs text-on-surface-variant mt-1 font-medium">
-                      Assigned to: <span className="text-secondary font-bold">{task.assignee}</span> • {task.due}
-                    </p>
-                  </div>
-                  
-                  <ChevronRight className="w-5 h-5 text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              ))}
+            <div className="py-8 text-center text-on-surface-variant">
+              No action items assigned.
             </div>
           </motion.div>
           

@@ -38,7 +38,7 @@ export default function LoginPage() {
             className="space-y-2"
           >
             <div className="relative pl-8">
-              <div className="absolute left-0 top-1/2 w-2 h-2 bg-primary rounded-full -translate-y-1/2 shadow-[0_0_15px_rgba(37,211,102,0.6)]"></div>
+              <div className="absolute left-0 top-1/2 w-2 h-2 bg-primary rounded-full -translate-y-1/2 shadow-[0_0_15px_rgba(255,255,255,0.6)]"></div>
               <p className="text-xs font-bold uppercase tracking-widest text-primary/60">Stage 01</p>
               <h3 className="text-3xl font-semibold text-on-surface">Meeting</h3>
             </div>
@@ -46,7 +46,7 @@ export default function LoginPage() {
             <div className="w-[2px] h-10 bg-gradient-to-b from-primary to-transparent ml-[3px]"></div>
             
             <div className="relative pl-8">
-              <div className="absolute left-0 top-1/2 w-2 h-2 bg-primary rounded-full -translate-y-1/2 shadow-[0_0_15px_rgba(37,211,102,0.6)]"></div>
+              <div className="absolute left-0 top-1/2 w-2 h-2 bg-primary rounded-full -translate-y-1/2 shadow-[0_0_15px_rgba(255,255,255,0.6)]"></div>
               <p className="text-xs font-bold uppercase tracking-widest text-primary/60">Stage 02</p>
               <h3 className="text-3xl font-semibold text-on-surface">Summary</h3>
             </div>
@@ -54,7 +54,7 @@ export default function LoginPage() {
             <div className="w-[2px] h-10 bg-gradient-to-b from-primary to-transparent ml-[3px]"></div>
             
             <div className="relative pl-8">
-              <div className="absolute left-0 top-1/2 w-2 h-2 bg-primary rounded-full -translate-y-1/2 shadow-[0_0_15px_rgba(37,211,102,0.6)]"></div>
+              <div className="absolute left-0 top-1/2 w-2 h-2 bg-primary rounded-full -translate-y-1/2 shadow-[0_0_15px_rgba(255,255,255,0.6)]"></div>
               <p className="text-xs font-bold uppercase tracking-widest text-primary/60">Stage 03</p>
               <h3 className="text-3xl font-semibold text-on-surface">Proposal</h3>
             </div>
@@ -62,7 +62,7 @@ export default function LoginPage() {
             <div className="w-[2px] h-10 bg-gradient-to-b from-primary to-transparent ml-[3px]"></div>
             
             <div className="relative pl-8">
-              <div className="absolute left-0 top-1/2 w-2 h-2 bg-primary rounded-full -translate-y-1/2 shadow-[0_0_15px_rgba(37,211,102,0.6)]"></div>
+              <div className="absolute left-0 top-1/2 w-2 h-2 bg-primary rounded-full -translate-y-1/2 shadow-[0_0_15px_rgba(255,255,255,0.6)]"></div>
               <p className="text-xs font-bold uppercase tracking-widest text-primary/80">Stage 04</p>
               <h3 className="text-4xl font-bold text-primary tracking-tight">Closed Deal</h3>
             </div>
@@ -148,7 +148,7 @@ export default function LoginPage() {
             
             <div className="pt-4">
               <button 
-                className="w-full h-14 bg-primary text-primary-foreground font-bold text-lg rounded-xl hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(37,211,102,0.2)]" 
+                className="w-full h-14 bg-primary text-primary-foreground font-bold text-lg rounded-xl hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-[0_10px_20px_rgba(255,255,255,0.2)]" 
                 type="submit"
               >
                 Login to Engine

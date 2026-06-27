@@ -68,7 +68,7 @@ export default function MarketingPage() {
           </nav>
           <div className="flex items-center gap-6">
             <Link className="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors hidden md:block" href="/dashboard">Login</Link>
-            <Link href="/dashboard" className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg text-sm font-bold hover:opacity-90 active:scale-95 transition-all shadow-[0_0_15px_rgba(37,211,102,0.3)]">
+            <Link href="/dashboard" className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg text-sm font-bold hover:opacity-90 active:scale-95 transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)]">
               Start Free Trial
             </Link>
           </div>
@@ -136,16 +136,16 @@ export default function MarketingPage() {
             {/* Animated Connection Paths (SVG Overlay) */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 600">
               {/* Meeting to AI */}
-              <path d="M150 180 Q300 150 300 250" fill="none" stroke="rgba(37, 211, 102, 0.2)" strokeWidth="2"></path>
-              <path className="path-flow" d="M150 180 Q300 150 300 250" fill="none" stroke="#25D366" strokeWidth="2"></path>
+              <path d="M150 180 Q300 150 300 250" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="2"></path>
+              <path className="path-flow" d="M150 180 Q300 150 300 250" fill="none" stroke="#FFFFFF" strokeWidth="2"></path>
               
               {/* AI to Proposal */}
-              <path d="M300 350 Q300 450 150 420" fill="none" stroke="rgba(37, 211, 102, 0.2)" strokeWidth="2"></path>
-              <path className="path-flow" d="M300 350 Q300 450 150 420" fill="none" stroke="#25D366" strokeWidth="2"></path>
+              <path d="M300 350 Q300 450 150 420" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="2"></path>
+              <path className="path-flow" d="M300 350 Q300 450 150 420" fill="none" stroke="#FFFFFF" strokeWidth="2"></path>
               
               {/* Proposal to Growth */}
-              <path d="M150 420 Q400 500 450 450" fill="none" stroke="rgba(37, 211, 102, 0.2)" strokeWidth="2"></path>
-              <path className="path-flow" d="M150 420 Q400 500 450 450" fill="none" stroke="#25D366" strokeWidth="2"></path>
+              <path d="M150 420 Q400 500 450 450" fill="none" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="2"></path>
+              <path className="path-flow" d="M150 420 Q400 500 450 450" fill="none" stroke="#FFFFFF" strokeWidth="2"></path>
             </svg>
 
             {/* Floating Cards */}
@@ -175,7 +175,7 @@ export default function MarketingPage() {
 
             {/* AI Analysis */}
             <motion.div 
-              animate={{ boxShadow: ["0 0 20px rgba(37,211,102,0.1)", "0 0 40px rgba(37,211,102,0.3)", "0 0 20px rgba(37,211,102,0.1)"] }}
+              animate={{ boxShadow: ["0 0 20px rgba(255,255,255,0.1)", "0 0 40px rgba(255,255,255,0.3)", "0 0 20px rgba(255,255,255,0.1)"] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
               className="absolute top-[40%] left-[45%] -translate-x-1/2 glass-surface border border-white/10 p-6 rounded-2xl w-64 z-20 shadow-2xl"
             >
@@ -211,7 +211,7 @@ export default function MarketingPage() {
             <motion.div 
               animate={{ y: [-5, 5, -5] }}
               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 2 }}
-              className="absolute bottom-[10%] right-[5%] glass-surface p-6 rounded-2xl w-56 border border-primary/30 shadow-[0_0_30px_rgba(37,211,102,0.15)]"
+              className="absolute bottom-[10%] right-[5%] glass-surface p-6 rounded-2xl w-56 border border-primary/30 shadow-[0_0_30px_rgba(255,255,255,0.15)]"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/20">
@@ -226,12 +226,12 @@ export default function MarketingPage() {
               
               {/* Small Sparkline */}
               <svg className="w-full h-8 mt-4" viewBox="0 0 100 30">
-                <path d="M0 25 L20 20 L40 22 L60 10 L80 12 L100 2" fill="none" stroke="#25D366" strokeWidth="2"></path>
+                <path d="M0 25 L20 20 L40 22 L60 10 L80 12 L100 2" fill="none" stroke="#FFFFFF" strokeWidth="2"></path>
                 <path d="M0 25 L20 20 L40 22 L60 10 L80 12 L100 2 L100 30 L0 30 Z" fill="url(#grad)" opacity="0.2"></path>
                 <defs>
                   <linearGradient id="grad" x1="0%" x2="0%" y1="0%" y2="100%">
-                    <stop offset="0%" stopColor="#25D366" stopOpacity="1" />
-                    <stop offset="100%" stopColor="#25D366" stopOpacity="0" />
+                    <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
+                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
                   </linearGradient>
                 </defs>
               </svg>
@@ -344,7 +344,7 @@ export default function MarketingPage() {
                 <div className="absolute left-[23px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary via-secondary to-transparent"></div>
                 
                 <div className="relative pl-16">
-                  <div className="absolute left-0 w-12 h-12 rounded-full bg-background border border-primary flex items-center justify-center z-10 shadow-[0_0_15px_rgba(37,211,102,0.2)]">
+                  <div className="absolute left-0 w-12 h-12 rounded-full bg-background border border-primary flex items-center justify-center z-10 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
                     <Video className="w-5 h-5 text-primary" />
                   </div>
                   <h4 className="text-xl font-bold mb-2 text-on-surface">The Meeting</h4>
@@ -354,7 +354,7 @@ export default function MarketingPage() {
                 </div>
                 
                 <div className="relative pl-16">
-                  <div className="absolute left-0 w-12 h-12 rounded-full bg-background border border-secondary flex items-center justify-center z-10 shadow-[0_0_15px_rgba(114,216,200,0.2)]">
+                  <div className="absolute left-0 w-12 h-12 rounded-full bg-background border border-secondary flex items-center justify-center z-10 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
                     <Activity className="w-5 h-5 text-secondary" />
                   </div>
                   <h4 className="text-xl font-bold mb-2 text-on-surface">Instant Analysis</h4>
@@ -364,7 +364,7 @@ export default function MarketingPage() {
                 </div>
 
                 <div className="relative pl-16">
-                  <div className="absolute left-0 w-12 h-12 rounded-full bg-background border border-tertiary flex items-center justify-center z-10 shadow-[0_0_15px_rgba(86,237,177,0.2)]">
+                  <div className="absolute left-0 w-12 h-12 rounded-full bg-background border border-tertiary flex items-center justify-center z-10 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
                     <CheckCircle2 className="w-5 h-5 text-tertiary" />
                   </div>
                   <h4 className="text-xl font-bold mb-2 text-on-surface">Automated Action</h4>
@@ -385,7 +385,7 @@ export default function MarketingPage() {
               <motion.div 
                 animate={{ y: [-15, 15, -15] }}
                 transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
-                className="glass-card p-2 rounded-[32px] shadow-[0_30px_60px_rgba(37,211,102,0.2)] relative overflow-hidden border-primary/40 bg-background/80 group"
+                className="glass-card p-2 rounded-[32px] shadow-[0_30px_60px_rgba(255,255,255,0.2)] relative overflow-hidden border-primary/40 bg-background/80 group"
               >
                 {/* Sweeping Reflection Animation */}
                 <motion.div 
@@ -401,9 +401,9 @@ export default function MarketingPage() {
                   {/* Mock App Header */}
                   <div className="h-12 border-b border-white/10 flex items-center px-4 justify-between bg-surface-container-highest/80 backdrop-blur-md absolute top-0 w-full z-20">
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-error shadow-[0_0_8px_rgba(255,82,82,0.5)]"></div>
-                      <div className="w-3 h-3 rounded-full bg-secondary shadow-[0_0_8px_rgba(18,140,126,0.5)]"></div>
-                      <div className="w-3 h-3 rounded-full bg-primary shadow-[0_0_8px_rgba(37,211,102,0.8)] animate-pulse"></div>
+                      <div className="w-3 h-3 rounded-full bg-error shadow-[0_0_8px_rgba(255,255,255,0.5)]"></div>
+                      <div className="w-3 h-3 rounded-full bg-secondary shadow-[0_0_8px_rgba(255,255,255,0.5)]"></div>
+                      <div className="w-3 h-3 rounded-full bg-primary shadow-[0_0_8px_rgba(255,255,255,0.8)] animate-pulse"></div>
                     </div>
                     <div className="text-xs font-semibold text-outline tracking-wider flex items-center gap-2">
                       <Activity className="w-3 h-3 text-primary animate-pulse" />
@@ -430,7 +430,7 @@ export default function MarketingPage() {
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.6, duration: 0.6 }}
-                      className="absolute top-20 right-6 glass-card border border-primary/30 rounded-xl p-3 flex items-center gap-3 backdrop-blur-xl bg-background/80 shadow-[0_0_20px_rgba(37,211,102,0.2)]"
+                      className="absolute top-20 right-6 glass-card border border-primary/30 rounded-xl p-3 flex items-center gap-3 backdrop-blur-xl bg-background/80 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                     >
                       <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                         <ArrowUpRight className="w-4 h-4" />
@@ -463,7 +463,7 @@ export default function MarketingPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-xl font-black text-primary drop-shadow-[0_0_10px_rgba(37,211,102,0.5)]">+$240k</p>
+                        <p className="text-xl font-black text-primary drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">+$240k</p>
                       </div>
                     </motion.div>
                   </div>
@@ -508,7 +508,7 @@ export default function MarketingPage() {
               <div className="h-48 bg-surface-container-high relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-black/20 z-10"></div>
                 {/* Decorative background grid */}
-                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#25D366 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
+                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#FFFFFF 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
                 <div className="absolute bottom-6 left-6 z-20">
                   <span className="px-3 py-1 rounded bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest">Enterprise</span>
                   <h5 className="text-xl text-white font-bold mt-3 leading-tight">Nexus Global<br/>Core Expansion</h5>
@@ -536,7 +536,7 @@ export default function MarketingPage() {
             >
               <div className="h-48 bg-surface-container-high relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-black/20 z-10"></div>
-                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#72d8c8 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#FFFFFF 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
                 <div className="absolute bottom-6 left-6 z-20">
                   <span className="px-3 py-1 rounded bg-secondary text-secondary-foreground text-[10px] font-bold uppercase tracking-widest">Growth</span>
                   <h5 className="text-xl text-white font-bold mt-3 leading-tight">Sapphire Logistics<br/>Master Service</h5>
@@ -564,7 +564,7 @@ export default function MarketingPage() {
             >
               <div className="h-48 bg-surface-container-high relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-black/20 z-10"></div>
-                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(45deg, #56edb1 25%, transparent 25%, transparent 75%, #56edb1 75%, #56edb1), linear-gradient(45deg, #56edb1 25%, transparent 25%, transparent 75%, #56edb1 75%, #56edb1)', backgroundSize: '20px 20px', backgroundPosition: '0 0, 10px 10px' }}></div>
+                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(45deg, #FFFFFF 25%, transparent 25%, transparent 75%, #FFFFFF 75%, #FFFFFF), linear-gradient(45deg, #FFFFFF 25%, transparent 25%, transparent 75%, #FFFFFF 75%, #FFFFFF)', backgroundSize: '20px 20px', backgroundPosition: '0 0, 10px 10px' }}></div>
                 <div className="absolute bottom-6 left-6 z-20">
                   <span className="px-3 py-1 rounded bg-tertiary text-tertiary-foreground text-[10px] font-bold uppercase tracking-widest">Expansion</span>
                   <h5 className="text-xl text-white font-bold mt-3 leading-tight">Quantum AI<br/>Partnership V3</h5>

@@ -1,6 +1,6 @@
 {
-  "name": "Firebase GenAI Starter",
-  "description": "A starter template using Next.js 15, Firebase (Firestore, Auth, Storage), and the Gemini API.",
+  "name": "Revenue OS",
+  "description": "Enterprise BI Analytics and Revenue Operations platform.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

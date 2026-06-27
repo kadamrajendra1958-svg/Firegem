@@ -12,15 +12,7 @@ import {
   Check
 } from "lucide-react";
 
-const TRANSCRIPT = [
-  { id: 1, speaker: "Marcus Sterling", time: "00:00", text: "Alright, let's get started. Thanks everyone for joining the Q3 Expansion review.", type: "internal" },
-  { id: 2, speaker: "Sarah Jenkins", time: "00:15", text: "Thanks Marcus. I've been looking over the preliminary numbers for the EMEA region, and we're seeing some friction in the enterprise segment.", type: "external" },
-  { id: 3, speaker: "Marcus Sterling", time: "00:32", text: "What kind of friction? Is it pricing, or implementation timelines?", type: "internal" },
-  { id: 4, speaker: "Sarah Jenkins", time: "00:45", text: "Mostly implementation. The larger accounts are concerned about the migration downtime from their legacy systems. We need a more robust transition strategy.", type: "external" },
-  { id: 5, speaker: "Marcus Sterling", time: "01:12", text: "Understood. Our technical account managers have developed a phased rollout plan that guarantees zero downtime. We should highlight that in our upcoming proposals.", type: "internal" },
-  { id: 6, speaker: "Sarah Jenkins", time: "01:30", text: "That would be perfect. If we can guarantee zero downtime, I'm confident we can close the Nexus Global deal by next week.", type: "external" },
-  { id: 7, speaker: "Marcus Sterling", time: "01:45", text: "Great. Let's make sure the engineering team signs off on the technical requirements for Nexus by tomorrow.", type: "internal" },
-];
+const TRANSCRIPT: any[] = [];
 
 export default function TranscriptPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -133,20 +125,8 @@ export default function TranscriptPage() {
               Deal Sentiment
             </h3>
             
-            <div className="glass-card rounded-xl p-5 border-primary/20 bg-background/50">
-              <div className="flex justify-between items-end mb-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(37,211,102,0.8)] animate-pulse"></div>
-                  <span className="font-bold text-on-surface">Positive Indicator</span>
-                </div>
-                <span className="text-primary font-bold text-xl">84%</span>
-              </div>
-              <div className="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden mb-4">
-                <div className="w-[84%] h-full bg-primary rounded-full"></div>
-              </div>
-              <p className="text-xs text-on-surface-variant font-medium leading-relaxed">
-                Client exhibits high buying intent. Primary concern isolated to implementation friction rather than pricing.
-              </p>
+            <div className="glass-card rounded-xl p-5 border-white/5 bg-background/50">
+              <p className="text-sm text-on-surface-variant text-center py-4">No sentiment data available.</p>
             </div>
           </motion.div>
 
@@ -161,26 +141,8 @@ export default function TranscriptPage() {
               Key Action Items
             </h3>
             
-            <div className="space-y-3">
-              <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group">
-                <div className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded border border-white/20 mt-0.5 group-hover:border-primary transition-colors"></div>
-                  <div>
-                    <p className="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">Update Technical Proposal</p>
-                    <p className="text-xs text-on-surface-variant mt-1">Highlight zero-downtime phased rollout strategy.</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group">
-                <div className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded border border-white/20 mt-0.5 group-hover:border-primary transition-colors"></div>
-                  <div>
-                    <p className="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">Engineering Sign-off</p>
-                    <p className="text-xs text-on-surface-variant mt-1">Get approval on Nexus technical requirements by tomorrow.</p>
-                  </div>
-                </div>
-              </div>
+            <div className="glass-card rounded-xl p-5 border-white/5 bg-background/50">
+              <p className="text-sm text-on-surface-variant text-center py-4">No action items extracted.</p>
             </div>
           </motion.div>
 
@@ -195,14 +157,8 @@ export default function TranscriptPage() {
               Risk Factors
             </h3>
             
-            <div className="p-4 rounded-xl border border-error/20 bg-error/5 flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-error shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-bold text-on-surface">Migration Timeline</p>
-                <p className="text-xs text-on-surface-variant mt-1 font-medium leading-relaxed">
-                  Client highly sensitive to legacy system downtime. Failure to guarantee smooth transition could stall the deal.
-                </p>
-              </div>
+            <div className="glass-card rounded-xl p-5 border-white/5 bg-background/50">
+              <p className="text-sm text-on-surface-variant text-center py-4">No risk factors identified.</p>
             </div>
           </motion.div>
         </div>

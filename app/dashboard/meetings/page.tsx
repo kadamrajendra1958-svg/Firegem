@@ -12,50 +12,7 @@ import {
   MoreVertical 
 } from "lucide-react";
 
-const MEETINGS = [
-  {
-    id: 1,
-    client: "Global Corp Expansion",
-    lead: "Marcus Sterling",
-    budget: "$1.2M",
-    status: "Analyzing",
-    statusColor: "bg-secondary",
-    date: "Oct 12, 2023",
-    image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=200&auto=format&fit=crop",
-    pulse: true,
-  },
-  {
-    id: 2,
-    client: "Nexus Global Series B",
-    lead: "Sarah Jenkins",
-    budget: "$850k",
-    status: "Drafting Proposal",
-    statusColor: "bg-primary",
-    date: "Oct 11, 2023",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=200&auto=format&fit=crop",
-  },
-  {
-    id: 3,
-    client: "Vertex Systems Renewal",
-    lead: "Elena Rodriguez",
-    budget: "$2.4M",
-    status: "Follow-up Required",
-    statusColor: "bg-error",
-    statusContainer: "bg-error/10 border-error/20 text-error",
-    date: "Oct 10, 2023",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop",
-  },
-  {
-    id: 4,
-    client: "Quantum Leap Integration",
-    lead: "David Chen",
-    budget: "$420k",
-    status: "Analyzing",
-    statusColor: "bg-secondary",
-    date: "Oct 09, 2023",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop",
-  }
-];
+const MEETINGS: any[] = [];
 
 export default function MeetingsPage() {
   return (
@@ -78,7 +35,7 @@ export default function MeetingsPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap"
+            className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(255,255,255,0.15)] whitespace-nowrap"
           >
             <CloudUpload className="w-5 h-5" />
             <span className="text-sm tracking-wide">Upload Recording</span>
@@ -114,67 +71,129 @@ export default function MeetingsPage() {
 
         {/* Meeting List Grid */}
         <div className="flex flex-col gap-4">
-          {MEETINGS.map((meeting, i) => (
-            <Link key={meeting.id} href={`/dashboard/meetings/${meeting.id}`}>
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 + (i * 0.1) }}
-                className="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 group cursor-pointer transition-all hover:-translate-y-1 hover:border-primary/30 border-white/5"
-              >
-              <div className="flex items-center gap-5 w-full md:w-[35%] shrink-0">
-                <div className="relative shrink-0">
-                  <div className="w-14 h-14 rounded-full border-2 border-white/10 overflow-hidden bg-surface-container-highest">
-                    <Image 
-                      src={meeting.image}
-                      alt={meeting.client}
-                      width={56}
-                      height={56}
-                      className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-                  {meeting.id === 1 && (
-                    <div className="absolute -bottom-1 -right-1 bg-primary w-4 h-4 rounded-full border-2 border-background shadow-[0_0_8px_rgba(37,211,102,0.8)]"></div>
-                  )}
-                </div>
-                <div className="overflow-hidden">
-                  <h3 className="text-lg font-bold text-on-surface group-hover:text-primary transition-colors truncate">{meeting.client}</h3>
-                  <p className="text-sm text-on-surface-variant font-medium mt-0.5 truncate">Lead: {meeting.lead}</p>
-                </div>
+          {MEETINGS.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="glass-card rounded-2xl p-12 flex flex-col items-center justify-center text-center border border-white/5 border-dashed min-h-[400px]"
+            >
+              <div className="relative w-64 h-40 mb-10 [perspective:1000px]">
+                {/* Animated meeting card */}
+                <motion.div 
+                  animate={{ y: [0, -10, 0] }} 
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inset-0 bg-surface-container-highest border border-white/10 rounded-xl shadow-2xl p-5 flex flex-col justify-between overflow-hidden"
+                >
+                   <div className="flex items-center gap-4">
+                     <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center overflow-hidden shrink-0 border border-white/10 relative">
+                       <motion.div 
+                         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }} 
+                         transition={{ duration: 2, repeat: Infinity }}
+                         className="absolute inset-0 bg-primary/30"
+                       />
+                     </div>
+                     <div className="space-y-2.5 flex-1 w-full">
+                       <div className="h-2.5 w-3/4 bg-white/10 rounded-full"></div>
+                       <div className="h-2.5 w-1/2 bg-white/5 rounded-full"></div>
+                     </div>
+                   </div>
+                   <div className="space-y-2.5 mt-4">
+                     <div className="h-1.5 w-full bg-white/5 rounded-full"></div>
+                     <div className="h-1.5 w-5/6 bg-white/5 rounded-full"></div>
+                   </div>
+                   <div className="flex justify-between items-center mt-4 pt-4 border-t border-white/5">
+                     <div className="h-2.5 w-16 bg-white/10 rounded-full"></div>
+                     <div className="h-6 w-20 bg-primary/10 rounded-md border border-primary/20 flex items-center justify-center">
+                        <motion.div 
+                          animate={{ opacity: [0.3, 1, 0.3] }} 
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="h-1.5 w-8 bg-primary rounded-full shadow-[0_0_5px_rgba(255,255,255,0.5)]"
+                        />
+                     </div>
+                   </div>
+                </motion.div>
+                
+                {/* Scanning line / Upload effect */}
+                <motion.div 
+                  animate={{ top: ['0%', '100%', '0%'] }} 
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  className="absolute left-0 right-0 h-0.5 bg-primary shadow-[0_0_12px_rgba(255,255,255,1)] z-10"
+                />
               </div>
-              
-              <div className="flex items-center justify-between md:justify-around w-full md:w-[65%] gap-4">
-                <div className="text-center md:text-left shrink-0">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Budget</p>
-                  <p className="text-2xl font-bold text-primary tracking-tight">{meeting.budget}</p>
-                </div>
-                
-                <div className="text-center md:text-left shrink-0">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Status</p>
-                  <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-surface-container-highest ${meeting.statusContainer || ''}`}>
-                    <span className={`w-2 h-2 rounded-full ${meeting.statusColor} ${meeting.pulse ? 'animate-pulse shadow-[0_0_8px_rgba(18,140,126,0.8)]' : ''}`}></span>
-                    <span className="text-xs font-bold">{meeting.status}</span>
-                  </div>
-                </div>
-                
-                <div className="text-right hidden sm:block shrink-0">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Date</p>
-                  <p className="text-sm font-semibold text-on-surface">{meeting.date}</p>
-                </div>
-                
-                <div className="flex gap-2 shrink-0">
-                  <button className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant hover:bg-primary/20 hover:text-primary hover:border-primary/30 transition-all">
-                    <PlayCircle className="w-5 h-5" />
-                  </button>
-                  <button className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-on-surface transition-all">
-                    <MoreVertical className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
+
+              <h3 className="text-2xl font-bold text-on-surface mb-3">Awaiting Intelligence</h3>
+              <p className="text-on-surface-variant max-w-md mx-auto mb-8 leading-relaxed">
+                Upload a recording to start generating automated revenue intelligence, transcripts, and proposals.
+              </p>
+              <button className="px-6 py-3 bg-primary text-background font-bold rounded-lg hover:brightness-110 transition-all flex items-center gap-2">
+                <CloudUpload className="w-5 h-5" />
+                Upload Recording
+              </button>
             </motion.div>
-          </Link>
-          ))}
+          ) : (
+            MEETINGS.map((meeting, i) => (
+              <Link key={meeting.id} href={`/dashboard/meetings/${meeting.id}`}>
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 + (i * 0.1) }}
+                  className="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 group cursor-pointer transition-all hover:-translate-y-1 hover:border-primary/30 border-white/5"
+                >
+                <div className="flex items-center gap-5 w-full md:w-[35%] shrink-0">
+                  <div className="relative shrink-0">
+                    <div className="w-14 h-14 rounded-full border-2 border-white/10 overflow-hidden bg-surface-container-highest">
+                      <Image 
+                        src={meeting.image}
+                        alt={meeting.client}
+                        width={56}
+                        height={56}
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    {meeting.id === 1 && (
+                      <div className="absolute -bottom-1 -right-1 bg-primary w-4 h-4 rounded-full border-2 border-background shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+                    )}
+                  </div>
+                  <div className="overflow-hidden">
+                    <h3 className="text-lg font-bold text-on-surface group-hover:text-primary transition-colors truncate">{meeting.client}</h3>
+                    <p className="text-sm text-on-surface-variant font-medium mt-0.5 truncate">Lead: {meeting.lead}</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between md:justify-around w-full md:w-[65%] gap-4">
+                  <div className="text-center md:text-left shrink-0">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Budget</p>
+                    <p className="text-2xl font-bold text-primary tracking-tight">{meeting.budget}</p>
+                  </div>
+                  
+                  <div className="text-center md:text-left shrink-0">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Status</p>
+                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-surface-container-highest ${meeting.statusContainer || ''}`}>
+                      <span className={`w-2 h-2 rounded-full ${meeting.statusColor} ${meeting.pulse ? 'animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.8)]' : ''}`}></span>
+                      <span className="text-xs font-bold">{meeting.status}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="text-right hidden sm:block shrink-0">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Date</p>
+                    <p className="text-sm font-semibold text-on-surface">{meeting.date}</p>
+                  </div>
+                  
+                  <div className="flex gap-2 shrink-0">
+                    <button className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant hover:bg-primary/20 hover:text-primary hover:border-primary/30 transition-all">
+                      <PlayCircle className="w-5 h-5" />
+                    </button>
+                    <button className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-on-surface transition-all">
+                      <MoreVertical className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+            ))
+          )}
         </div>
 
         {/* Footer Stats */}
@@ -187,21 +206,21 @@ export default function MeetingsPage() {
           <div className="glass-card rounded-2xl p-6 border-l-4 border-l-primary border-t-white/5 border-r-white/5 border-b-white/5 hover:border-r-white/10 hover:border-t-white/10 hover:border-b-white/10 hover:-translate-y-1 transition-all cursor-pointer">
             <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Quarterly Pipeline</p>
             <div className="flex items-baseline gap-3">
-              <span className="text-3xl font-bold text-on-surface tracking-tight">$4.8M</span>
-              <span className="text-primary text-sm font-bold flex items-center gap-0.5">↑ 12%</span>
+              <span className="text-3xl font-bold text-on-surface tracking-tight">$0</span>
+              <span className="text-on-surface-variant text-sm font-bold flex items-center gap-0.5">0%</span>
             </div>
           </div>
           <div className="glass-card rounded-2xl p-6 border-l-4 border-l-secondary border-t-white/5 border-r-white/5 border-b-white/5 hover:border-r-white/10 hover:border-t-white/10 hover:border-b-white/10 hover:-translate-y-1 transition-all cursor-pointer">
             <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Active Engagements</p>
             <div className="flex items-baseline gap-3">
-              <span className="text-3xl font-bold text-on-surface tracking-tight">24</span>
-              <span className="text-secondary text-sm font-bold flex items-center gap-0.5">+3 this week</span>
+              <span className="text-3xl font-bold text-on-surface tracking-tight">0</span>
+              <span className="text-on-surface-variant text-sm font-bold flex items-center gap-0.5">No active</span>
             </div>
           </div>
           <div className="glass-card rounded-2xl p-6 border-l-4 border-l-outline-variant border-t-white/5 border-r-white/5 border-b-white/5 hover:border-r-white/10 hover:border-t-white/10 hover:border-b-white/10 hover:-translate-y-1 transition-all cursor-pointer">
             <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Pending Proposals</p>
             <div className="flex items-baseline gap-3">
-              <span className="text-3xl font-bold text-on-surface tracking-tight">12</span>
+              <span className="text-3xl font-bold text-on-surface tracking-tight">0</span>
               <span className="text-outline-variant text-sm font-bold">Stability Phase</span>
             </div>
           </div>

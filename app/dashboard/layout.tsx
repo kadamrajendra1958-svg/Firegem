@@ -30,17 +30,17 @@ export default function DashboardLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   return (
-    <div className="min-h-screen bg-background text-on-background font-sans selection:bg-primary/30 overflow-hidden flex relative">
+    <div className="min-h-screen bg-background text-on-background font-sans selection:bg-primary/30 overflow-hidden flex relative print:bg-white print:text-black print:overflow-visible print:block">
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden print:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
       {/* Sidebar Navigation */}
-      <aside className={`h-screen w-64 fixed left-0 top-0 border-r border-white/10 bg-surface-container-low/95 backdrop-blur-xl z-50 flex flex-col p-4 gap-2 transition-transform duration-300 ${
+      <aside className={`h-screen w-64 fixed left-0 top-0 border-r border-white/10 bg-surface-container-low/95 backdrop-blur-xl z-50 flex flex-col p-4 gap-2 transition-transform duration-300 print:hidden ${
         mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
       }`}>
         <div className="mb-8 px-4 flex items-center justify-between gap-3">
@@ -103,15 +103,25 @@ export default function DashboardLayout({
             <span className="text-sm tracking-wide">Proposals</span>
           </Link>
           <Link
-            href="#"
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors active:scale-95 duration-150 text-on-surface-variant hover:bg-white/5 hover:text-primary font-semibold`}
+            href="/dashboard/analytics"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors active:scale-95 duration-150 ${
+              pathname === "/dashboard/analytics" 
+                ? "text-primary font-bold bg-primary/10" 
+                : "text-on-surface-variant hover:bg-white/5 hover:text-primary font-semibold"
+            }`}
           >
             <BarChart className="w-5 h-5 shrink-0" />
             <span className="text-sm tracking-wide">Analytics</span>
           </Link>
           <Link
-            href="#"
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors active:scale-95 duration-150 text-on-surface-variant hover:bg-white/5 hover:text-primary font-semibold`}
+            href="/dashboard/integrations"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors active:scale-95 duration-150 ${
+              pathname === "/dashboard/integrations" 
+                ? "text-primary font-bold bg-primary/10" 
+                : "text-on-surface-variant hover:bg-white/5 hover:text-primary font-semibold"
+            }`}
           >
             <Network className="w-5 h-5 shrink-0" />
             <span className="text-sm tracking-wide">Integrations</span>
@@ -126,7 +136,7 @@ export default function DashboardLayout({
         </nav>
 
         <div className="mt-auto border-t border-white/5 pt-4">
-          <Link href="/dashboard/proposals" onClick={() => setMobileMenuOpen(false)} className="w-full bg-primary text-primary-foreground font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all mb-4 shadow-[0_0_15px_rgba(37,211,102,0.2)]">
+          <Link href="/dashboard/proposals" onClick={() => setMobileMenuOpen(false)} className="w-full bg-primary text-primary-foreground font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all mb-4 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
             <Plus className="w-5 h-5 shrink-0" />
             <span className="text-sm">New Proposal</span>
           </Link>
@@ -141,9 +151,9 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main Content Area */}
-      <main className="w-full lg:ml-64 min-h-screen flex flex-col relative bg-background overflow-hidden">
+      <main className="w-full lg:ml-64 min-h-screen flex flex-col relative bg-background overflow-hidden print:bg-white print:ml-0 print:overflow-visible">
         {/* Top App Bar */}
-        <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-md border-b border-white/5 flex justify-between items-center px-4 md:px-8 py-3 h-16 shrink-0">
+        <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-md border-b border-white/5 flex justify-between items-center px-4 md:px-8 py-3 h-16 shrink-0 print:hidden">
           <div className="flex items-center gap-4 md:gap-8">
             <button 
               className="lg:hidden text-on-surface hover:text-primary"
@@ -199,20 +209,14 @@ export default function DashboardLayout({
             <div className="flex items-center gap-3 pl-2 md:pl-4 border-l border-white/10">
               <div className="text-right hidden sm:block">
                 <p className="text-sm text-on-surface font-bold leading-none">
-                  Alex Sterling
+                  User
                 </p>
                 <p className="text-[10px] text-on-surface-variant uppercase tracking-wider mt-1">
-                  VP Sales
+                  Guest
                 </p>
               </div>
-              <div className="relative w-8 h-8 md:w-10 md:h-10 rounded-full border border-primary/30 overflow-hidden shrink-0">
-                <Image
-                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop"
-                  alt="Profile"
-                  fill
-                  className="object-cover"
-                  referrerPolicy="no-referrer"
-                />
+              <div className="relative w-8 h-8 md:w-10 md:h-10 rounded-full border border-primary/30 overflow-hidden shrink-0 flex items-center justify-center bg-surface-container-highest">
+                <span className="text-sm font-bold text-on-surface-variant">U</span>
               </div>
             </div>
           </div>
