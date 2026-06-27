@@ -1,0 +1,219 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "motion/react";
+import { 
+  Search, 
+  Copy, 
+  Bot, 
+  Sparkles, 
+  CheckCircle2, 
+  AlertTriangle,
+  Check
+} from "lucide-react";
+
+const TRANSCRIPT = [
+  { id: 1, speaker: "Marcus Sterling", time: "00:00", text: "Alright, let's get started. Thanks everyone for joining the Q3 Expansion review.", type: "internal" },
+  { id: 2, speaker: "Sarah Jenkins", time: "00:15", text: "Thanks Marcus. I've been looking over the preliminary numbers for the EMEA region, and we're seeing some friction in the enterprise segment.", type: "external" },
+  { id: 3, speaker: "Marcus Sterling", time: "00:32", text: "What kind of friction? Is it pricing, or implementation timelines?", type: "internal" },
+  { id: 4, speaker: "Sarah Jenkins", time: "00:45", text: "Mostly implementation. The larger accounts are concerned about the migration downtime from their legacy systems. We need a more robust transition strategy.", type: "external" },
+  { id: 5, speaker: "Marcus Sterling", time: "01:12", text: "Understood. Our technical account managers have developed a phased rollout plan that guarantees zero downtime. We should highlight that in our upcoming proposals.", type: "internal" },
+  { id: 6, speaker: "Sarah Jenkins", time: "01:30", text: "That would be perfect. If we can guarantee zero downtime, I'm confident we can close the Nexus Global deal by next week.", type: "external" },
+  { id: 7, speaker: "Marcus Sterling", time: "01:45", text: "Great. Let's make sure the engineering team signs off on the technical requirements for Nexus by tomorrow.", type: "internal" },
+];
+
+export default function TranscriptPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    const textToCopy = TRANSCRIPT.map(t => `[${t.time}] ${t.speaker}: ${t.text}`).join("\n");
+    navigator.clipboard.writeText(textToCopy);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const filteredTranscript = TRANSCRIPT.filter(t => 
+    t.text.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    t.speaker.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div className="flex-1 overflow-hidden flex relative h-full">
+      {/* Left Column: Transcript Viewer */}
+      <div className="flex-1 flex flex-col h-full border-r border-white/5 bg-background/50">
+        {/* Transcript Controls */}
+        <div className="shrink-0 p-6 border-b border-white/5 flex items-center justify-between bg-surface-container-lowest/30">
+          <div className="relative w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-on-surface-variant" />
+            <input 
+              type="text" 
+              placeholder="Search transcript..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-surface-container-highest/50 border border-white/10 rounded-full pl-9 pr-4 py-2 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
+            />
+          </div>
+          
+          <button 
+            onClick={handleCopy}
+            className="px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-colors flex items-center gap-2 text-sm font-bold text-on-surface-variant group"
+          >
+            {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4 group-hover:text-primary transition-colors" />}
+            {copied ? <span className="text-primary">Copied!</span> : "Copy Full"}
+          </button>
+        </div>
+        
+        {/* Transcript Scroll Area */}
+        <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar relative">
+          <div className="absolute top-0 left-12 bottom-0 w-px bg-white/5 -z-10"></div>
+          
+          {filteredTranscript.map((block, i) => (
+            <motion.div 
+              key={block.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.05 }}
+              className="flex gap-6 group"
+            >
+              <div className="w-12 pt-1 shrink-0 flex flex-col items-center">
+                <div className="text-xs font-bold text-on-surface-variant/60 tracking-wider mb-2">{block.time}</div>
+                <div className={`w-2 h-2 rounded-full ring-4 ring-background ${block.type === 'internal' ? 'bg-primary' : 'bg-secondary'}`}></div>
+              </div>
+              
+              <div className={`flex-1 rounded-2xl p-5 border transition-colors ${
+                block.type === 'internal' 
+                  ? 'bg-primary/5 border-primary/10 hover:border-primary/30' 
+                  : 'bg-surface-container-highest border-white/5 hover:border-white/20'
+              }`}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className={`text-sm font-bold ${block.type === 'internal' ? 'text-primary' : 'text-secondary'}`}>
+                    {block.speaker}
+                  </span>
+                  <span className="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant/50">
+                    {block.type === 'internal' ? 'Revenue OS' : 'Client'}
+                  </span>
+                </div>
+                <p className="text-sm text-on-surface leading-relaxed font-medium">
+                  {block.text}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+          
+          {filteredTranscript.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-full text-on-surface-variant opacity-60">
+              <Search className="w-12 h-12 mb-4" />
+              <p className="font-bold">No results found for "{searchQuery}"</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Right Column: AI Analysis Sidebar */}
+      <div className="w-96 shrink-0 flex flex-col h-full bg-surface-container-lowest/80 border-l border-white/5">
+        <div className="shrink-0 p-6 border-b border-white/5 bg-primary/5 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+              <Sparkles className="w-4 h-4" />
+            </div>
+            <h2 className="text-lg font-bold text-primary tracking-tight">Revenue Intelligence</h2>
+          </div>
+        </div>
+        
+        <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+          {/* Sentiment & Intent */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4 flex items-center gap-2">
+              <Bot className="w-4 h-4" />
+              Deal Sentiment
+            </h3>
+            
+            <div className="glass-card rounded-xl p-5 border-primary/20 bg-background/50">
+              <div className="flex justify-between items-end mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(37,211,102,0.8)] animate-pulse"></div>
+                  <span className="font-bold text-on-surface">Positive Indicator</span>
+                </div>
+                <span className="text-primary font-bold text-xl">84%</span>
+              </div>
+              <div className="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden mb-4">
+                <div className="w-[84%] h-full bg-primary rounded-full"></div>
+              </div>
+              <p className="text-xs text-on-surface-variant font-medium leading-relaxed">
+                Client exhibits high buying intent. Primary concern isolated to implementation friction rather than pricing.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Key Extraction */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4 flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4" />
+              Key Action Items
+            </h3>
+            
+            <div className="space-y-3">
+              <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group">
+                <div className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded border border-white/20 mt-0.5 group-hover:border-primary transition-colors"></div>
+                  <div>
+                    <p className="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">Update Technical Proposal</p>
+                    <p className="text-xs text-on-surface-variant mt-1">Highlight zero-downtime phased rollout strategy.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors cursor-pointer group">
+                <div className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded border border-white/20 mt-0.5 group-hover:border-primary transition-colors"></div>
+                  <div>
+                    <p className="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">Engineering Sign-off</p>
+                    <p className="text-xs text-on-surface-variant mt-1">Get approval on Nexus technical requirements by tomorrow.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Risk Factors */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4 flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4" />
+              Risk Factors
+            </h3>
+            
+            <div className="p-4 rounded-xl border border-error/20 bg-error/5 flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-error shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-bold text-on-surface">Migration Timeline</p>
+                <p className="text-xs text-on-surface-variant mt-1 font-medium leading-relaxed">
+                  Client highly sensitive to legacy system downtime. Failure to guarantee smooth transition could stall the deal.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+        
+        <div className="shrink-0 p-6 border-t border-white/5 bg-background/50">
+          <button className="w-full py-3 rounded-lg bg-surface-container-highest border border-white/10 hover:border-primary/50 text-sm font-bold text-on-surface transition-all flex items-center justify-center gap-2">
+            <Bot className="w-4 h-4 text-primary" />
+            Generate Follow-up Email
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
