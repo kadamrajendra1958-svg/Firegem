@@ -64,7 +64,7 @@ export default function SignupPage() {
               </div>
               
               <div className="flex items-center gap-6 group">
-                <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary/50 flex items-center justify-center z-20 shadow-[0_0_15px_rgba(255,255,255,0.5)]">
+                <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary/50 flex items-center justify-center z-20 shadow-[0_0_15px_rgba(37,211,102,0.5)]">
                   <LockOpen className="text-primary w-4 h-4" />
                 </div>
                 <span className="text-2xl text-primary font-bold">Closed Deal</span>
@@ -175,7 +175,7 @@ export default function SignupPage() {
             {/* CTA */}
             <div className="pt-4">
               <button 
-                className="w-full py-4 bg-primary text-primary-foreground font-bold text-lg rounded-lg hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_8px_20px_-8px_rgba(255,255,255,0.4)] border-b-2 border-black/20" 
+                className="w-full py-4 bg-primary text-primary-foreground font-bold text-lg rounded-lg hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_8px_20px_-8px_rgba(37,211,102,0.4)] border-b-2 border-black/20" 
                 type="submit"
               >
                 Start Your Growth

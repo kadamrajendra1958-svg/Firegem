@@ -74,7 +74,7 @@ export default function AnalyticsPage() {
           <motion.div 
             animate={{ width: ["20%", "40%", "20%"], opacity: [0.8, 1, 0.8], scale: [1, 1.05, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
-            className="h-14 bg-primary border border-primary/50 rounded-xl relative overflow-hidden flex items-center justify-center w-[40%] shadow-[0_0_20px_rgba(255,255,255,0.3)] z-10"
+            className="h-14 bg-primary border border-primary/50 rounded-xl relative overflow-hidden flex items-center justify-center w-[40%] shadow-[0_0_20px_rgba(37,211,102,0.3)] z-10"
           >
              <Sparkles className="w-5 h-5 text-background" />
           </motion.div>
@@ -83,13 +83,13 @@ export default function AnalyticsPage() {
           <motion.div
             animate={{ y: [0, 140], opacity: [0, 1, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="absolute top-0 w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+            className="absolute top-0 w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(37,211,102,0.8)]"
             style={{ left: "30%" }}
           />
           <motion.div
             animate={{ y: [0, 160], opacity: [0, 1, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "linear", delay: 0.5 }}
-            className="absolute top-0 w-2.5 h-2.5 rounded-full bg-secondary shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+            className="absolute top-0 w-2.5 h-2.5 rounded-full bg-secondary shadow-[0_0_8px_rgba(37,211,102,0.8)]"
             style={{ left: "70%" }}
           />
         </div>

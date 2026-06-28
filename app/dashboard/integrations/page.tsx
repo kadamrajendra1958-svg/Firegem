@@ -21,7 +21,7 @@ export default function IntegrationsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           {/* Google Meet Card (Connected) */}
-          <div className="border border-white/5 border-t-white/10 bg-white/[0.04] hover:bg-white/[0.06] hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] backdrop-blur-xl p-6 rounded-xl flex flex-col h-full group transition-all duration-300">
+          <div className="border border-white/5 border-t-white/10 bg-white/[0.04] hover:bg-white/[0.06] hover:shadow-[0_0_20px_rgba(37,211,102,0.05)] backdrop-blur-xl p-6 rounded-xl flex flex-col h-full group transition-all duration-300">
             <div className="flex justify-between items-start mb-6">
               <div className="w-12 h-12 flex items-center justify-center bg-white/5 rounded-lg border border-white/10 group-hover:border-primary/30 transition-colors">
                 <img 
@@ -84,7 +84,7 @@ export default function IntegrationsPage() {
             </div>
             
             <div className="mt-8 pt-6 border-t border-white/5">
-              <button className="w-full py-3 bg-primary text-primary-foreground font-bold rounded-lg hover:brightness-110 active:scale-95 transition-all text-sm shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+              <button className="w-full py-3 bg-primary text-primary-foreground font-bold rounded-lg hover:brightness-110 active:scale-95 transition-all text-sm shadow-[0_0_15px_rgba(37,211,102,0.2)]">
                 Connect Zoom
               </button>
             </div>

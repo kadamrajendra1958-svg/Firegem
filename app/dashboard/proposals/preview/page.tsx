@@ -264,7 +264,7 @@ export default function ProposalPreviewPage() {
             <div className="space-y-3">
               <button 
                 onClick={() => window.print()}
-                className="w-full bg-primary text-primary-foreground font-bold text-sm py-4 rounded-lg flex items-center justify-center gap-3 hover:brightness-110 active:scale-95 transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                className="w-full bg-primary text-primary-foreground font-bold text-sm py-4 rounded-lg flex items-center justify-center gap-3 hover:brightness-110 active:scale-95 transition-all shadow-[0_0_15px_rgba(37,211,102,0.2)]"
               >
                 <FileText className="w-5 h-5" />
                 Download PDF

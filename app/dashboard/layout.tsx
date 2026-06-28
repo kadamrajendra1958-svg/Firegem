@@ -136,7 +136,7 @@ export default function DashboardLayout({
         </nav>
 
         <div className="mt-auto border-t border-white/5 pt-4">
-          <Link href="/dashboard/proposals" onClick={() => setMobileMenuOpen(false)} className="w-full bg-primary text-primary-foreground font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all mb-4 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+          <Link href="/dashboard/proposals" onClick={() => setMobileMenuOpen(false)} className="w-full bg-primary text-primary-foreground font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all mb-4 shadow-[0_0_15px_rgba(37,211,102,0.2)]">
             <Plus className="w-5 h-5 shrink-0" />
             <span className="text-sm">New Proposal</span>
           </Link>

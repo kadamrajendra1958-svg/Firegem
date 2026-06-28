@@ -35,7 +35,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="col-span-12 md:col-span-4 glass-card rounded-2xl p-6 shadow-[0_0_30px_rgba(255,255,255,0.05)] border-primary/20 hover:-translate-y-1 transition-transform group"
+          className="col-span-12 md:col-span-4 glass-card rounded-2xl p-6 shadow-[0_0_30px_rgba(37,211,102,0.05)] border-primary/20 hover:-translate-y-1 transition-transform group"
         >
           <div className="flex justify-between items-start mb-4">
             <span className="text-xs font-bold uppercase tracking-widest text-on-surface-variant group-hover:text-primary transition-colors">Meetings Processed</span>
@@ -52,7 +52,7 @@ export default function DashboardPage() {
             <div className="flex-1 bg-primary/30 h-5 rounded-sm hover:bg-primary/50 transition-colors"></div>
             <div className="flex-1 bg-primary/60 h-10 rounded-sm hover:bg-primary/80 transition-colors"></div>
             <div className="flex-1 bg-primary/50 h-7 rounded-sm hover:bg-primary/70 transition-colors"></div>
-            <div className="flex-1 bg-primary h-12 rounded-sm shadow-[0_0_10px_rgba(255,255,255,0.5)] hover:brightness-110 transition-colors"></div>
+            <div className="flex-1 bg-primary h-12 rounded-sm shadow-[0_0_10px_rgba(37,211,102,0.5)] hover:brightness-110 transition-colors"></div>
           </div>
         </motion.div>
 
@@ -179,7 +179,7 @@ export default function DashboardPage() {
               </div>
               
               <div className="flex justify-center">
-                <div className="glass-card px-8 py-4 rounded-xl border-primary/50 shadow-[0_0_30px_rgba(255,255,255,0.15)] bg-primary/10 backdrop-blur-xl pointer-events-auto">
+                <div className="glass-card px-8 py-4 rounded-xl border-primary/50 shadow-[0_0_30px_rgba(37,211,102,0.15)] bg-primary/10 backdrop-blur-xl pointer-events-auto">
                   <p className="text-[11px] uppercase font-bold text-primary tracking-widest text-center mb-1">Won Deals</p>
                   <p className="text-4xl font-bold text-on-surface text-center">0</p>
                 </div>
@@ -218,7 +218,7 @@ export default function DashboardPage() {
             </div>
             <div className="flex gap-6 items-center">
               <div className="flex items-center gap-2.5">
-                <div className="w-3.5 h-3.5 bg-primary rounded shadow-[0_0_8px_rgba(255,255,255,0.5)]"></div>
+                <div className="w-3.5 h-3.5 bg-primary rounded shadow-[0_0_8px_rgba(37,211,102,0.5)]"></div>
                 <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Actual ARR</span>
               </div>
               <div className="flex items-center gap-2.5">

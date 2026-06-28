@@ -28,7 +28,7 @@ export default function MeetingsPage() {
 
             <div className="flex flex-col gap-3">
               {/* Meeting Item: Active */}
-              <div className="glass-panel rounded-xl p-6 relative overflow-hidden group cursor-pointer border-l-4 border-l-primary transition-all duration-300 hover:bg-surface-container-high shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+              <div className="glass-panel rounded-xl p-6 relative overflow-hidden group cursor-pointer border-l-4 border-l-primary transition-all duration-300 hover:bg-surface-container-high shadow-[0_0_15px_rgba(37,211,102,0.1)]">
                 <div className="flex justify-between items-start">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 mb-1">

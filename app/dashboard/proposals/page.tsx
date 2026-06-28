@@ -24,7 +24,7 @@ export default function ProposalGenerationPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(255,255,255,0.15)] whitespace-nowrap"
+            className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap"
           >
             <FileText className="w-5 h-5" />
             <span className="text-sm tracking-wide">New Proposal</span>
@@ -82,7 +82,7 @@ export default function ProposalGenerationPage() {
              <motion.div 
                animate={{ top: ['0%', '100%', '0%'] }} 
                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-               className="absolute left-0 right-0 h-0.5 bg-primary/50 shadow-[0_0_8px_rgba(255,255,255,0.8)] z-10"
+               className="absolute left-0 right-0 h-0.5 bg-primary/50 shadow-[0_0_8px_rgba(37,211,102,0.8)] z-10"
              />
            </motion.div>
         </div>

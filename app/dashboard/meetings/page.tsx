@@ -35,7 +35,7 @@ export default function MeetingsPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(255,255,255,0.15)] whitespace-nowrap"
+            className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap"
           >
             <CloudUpload className="w-5 h-5" />
             <span className="text-sm tracking-wide">Upload Recording</span>
@@ -108,7 +108,7 @@ export default function MeetingsPage() {
                         <motion.div 
                           animate={{ opacity: [0.3, 1, 0.3] }} 
                           transition={{ duration: 1.5, repeat: Infinity }}
-                          className="h-1.5 w-8 bg-primary rounded-full shadow-[0_0_5px_rgba(255,255,255,0.5)]"
+                          className="h-1.5 w-8 bg-primary rounded-full shadow-[0_0_5px_rgba(37,211,102,0.5)]"
                         />
                      </div>
                    </div>
@@ -118,7 +118,7 @@ export default function MeetingsPage() {
                 <motion.div 
                   animate={{ top: ['0%', '100%', '0%'] }} 
                   transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  className="absolute left-0 right-0 h-0.5 bg-primary shadow-[0_0_12px_rgba(255,255,255,1)] z-10"
+                  className="absolute left-0 right-0 h-0.5 bg-primary shadow-[0_0_12px_rgba(37,211,102,1)] z-10"
                 />
               </div>
 
@@ -153,7 +153,7 @@ export default function MeetingsPage() {
                       />
                     </div>
                     {meeting.id === 1 && (
-                      <div className="absolute -bottom-1 -right-1 bg-primary w-4 h-4 rounded-full border-2 border-background shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
+                      <div className="absolute -bottom-1 -right-1 bg-primary w-4 h-4 rounded-full border-2 border-background shadow-[0_0_8px_rgba(37,211,102,0.8)]"></div>
                     )}
                   </div>
                   <div className="overflow-hidden">
@@ -171,7 +171,7 @@ export default function MeetingsPage() {
                   <div className="text-center md:text-left shrink-0">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">Status</p>
                     <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/5 bg-surface-container-highest ${meeting.statusContainer || ''}`}>
-                      <span className={`w-2 h-2 rounded-full ${meeting.statusColor} ${meeting.pulse ? 'animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.8)]' : ''}`}></span>
+                      <span className={`w-2 h-2 rounded-full ${meeting.statusColor} ${meeting.pulse ? 'animate-pulse shadow-[0_0_8px_rgba(37,211,102,0.8)]' : ''}`}></span>
                       <span className="text-xs font-bold">{meeting.status}</span>
                     </div>
                   </div>

@@ -62,7 +62,7 @@ export default function MeetingSummaryPage() {
                 <h3 className="text-2xl font-bold text-on-surface">Executive Overview</h3>
               </div>
               <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(37,211,102,0.8)]"></span>
                 <span className="text-xs font-bold text-on-surface-variant">Waiting</span>
               </div>
             </div>
