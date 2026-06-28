@@ -1,7 +1,16 @@
+"use client";
+
 import { Header } from "@/components/header";
 import { BarChart, CreditCard, ShieldCheck, LineChart as ChartLine, Save, CheckCircle2, MessageSquare, Palette, Network, Users } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function BuilderPage() {
+  const router = useRouter();
+
+  const handleAction = () => {
+    router.push("/dashboard/proposals");
+  };
+
   return (
     <>
       <Header title="Q4 Expansion Strategy" />
@@ -89,85 +98,10 @@ export default function BuilderPage() {
               </header>
 
               <article className="space-y-16">
-                {/* Summary Section */}
-                <section>
-                  <h3 className="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
-                    <ChartLine className="w-6 h-6" />
-                    Executive Summary
-                  </h3>
-                  <p className="text-lg leading-relaxed text-on-surface-variant">
-                    Global Horizon Tech is positioned for a transformative fiscal year. Based on our preliminary discovery sessions, your infrastructure requires a decentralized revenue engine capable of scaling horizontally across four key global territories. This proposal outlines the deployment of <span className="text-primary font-bold">Revenue OS Enterprise</span> to centralize your growth mechanics.
-                  </p>
-                </section>
-
-                {/* Revenue Projection Card */}
-                <section className="glass-surface bg-primary/5 border border-primary/20 rounded-2xl p-8 relative overflow-hidden">
-                  <div className="relative z-10 grid grid-cols-3 gap-8">
-                    <div>
-                      <p className="text-[10px] font-bold text-primary uppercase mb-2 tracking-widest">Projected Growth</p>
-                      <p className="text-4xl font-extrabold text-primary">+28.4%</p>
-                      <p className="text-sm text-outline-variant mt-1">Annual Recurring Revenue</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-bold text-primary uppercase mb-2 tracking-widest">Efficiency Gain</p>
-                      <p className="text-4xl font-extrabold text-primary">140hr</p>
-                      <p className="text-sm text-outline-variant mt-1">Saved per Account Lead</p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-bold text-primary uppercase mb-2 tracking-widest">Net Benefit</p>
-                      <p className="text-4xl font-extrabold text-primary">$4.2M</p>
-                      <p className="text-sm text-outline-variant mt-1">Operational Cost Saving</p>
-                    </div>
-                  </div>
-                </section>
-
-                {/* Interactive Table Mockup */}
-                <section>
-                  <h3 className="text-2xl font-bold text-on-surface mb-6">Tiered Deployment Model</h3>
-                  <div className="overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                    <table className="w-full text-left">
-                      <thead className="bg-white/10 text-outline uppercase text-[10px] tracking-widest font-bold">
-                        <tr>
-                          <th className="px-6 py-4">Component</th>
-                          <th className="px-6 py-4">Capability</th>
-                          <th className="px-6 py-4 text-right">Investment</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-white/5 text-sm">
-                        <tr className="hover:bg-white/5 transition-colors">
-                          <td className="px-6 py-4 font-bold text-on-surface">Core Engine</td>
-                          <td className="px-6 py-4 text-outline-variant">Full API access & CRM Sync</td>
-                          <td className="px-6 py-4 text-right font-bold text-lg">$85,000</td>
-                        </tr>
-                        <tr className="hover:bg-white/5 transition-colors">
-                          <td className="px-6 py-4 font-bold text-on-surface">Global Scaling</td>
-                          <td className="px-6 py-4 text-outline-variant">Multi-currency & Regional Tax</td>
-                          <td className="px-6 py-4 text-right font-bold text-lg">$42,000</td>
-                        </tr>
-                        <tr className="hover:bg-white/5 transition-colors">
-                          <td className="px-6 py-4 font-bold text-on-surface">Priority Support</td>
-                          <td className="px-6 py-4 text-outline-variant">24/7 Dedicated Account Rep</td>
-                          <td className="px-6 py-4 text-right font-bold text-lg">$12,500</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </section>
-
-                {/* Call to Action */}
-                <footer className="pt-12 mt-12 border-t border-white/5 text-center">
-                  <p className="text-sm text-outline-variant mb-8 italic">
-                    This proposal is valid for 30 business days. Digitally signed via Revenue OS Secure Vault.
-                  </p>
-                  <div className="flex justify-center gap-4">
-                    <button className="px-8 py-3 glass-surface text-on-surface font-bold rounded-xl hover:bg-white/10 transition-all active:scale-95 text-sm">
-                      Save as PDF
-                    </button>
-                    <button className="px-10 py-3 bg-primary text-primary-foreground font-extrabold rounded-xl hover:opacity-90 active:scale-95 transition-all revenue-pulse shadow-xl shadow-primary/20 text-sm">
-                      Close Deal & Execute
-                    </button>
-                  </div>
-                </footer>
+                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-white/10 rounded-2xl bg-white/5">
+                  <p className="text-on-surface-variant font-medium text-lg">No content blocks added yet.</p>
+                  <p className="text-on-surface-variant/60 text-sm mt-2">Drag and drop blocks from the left sidebar to build your proposal.</p>
+                </div>
               </article>
             </div>
           </div>

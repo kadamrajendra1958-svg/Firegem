@@ -2,12 +2,23 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Activity, Video, FileText, LockOpen, PersonStanding, Mail, Building2, Lock } from "lucide-react";
 import PipelineAnimation from "@/components/PipelineAnimation";
 import { motion } from "motion/react";
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const fullName = formData.get("full_name") as string;
+    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("userName", fullName || "User");
+    router.push("/dashboard");
+  };
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row bg-background text-on-background font-sans selection:bg-primary/30 overflow-x-hidden">
@@ -102,7 +113,7 @@ export default function SignupPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="space-y-6" 
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSignup}
           >
             {/* Full Name */}
             <div className="space-y-2 group">

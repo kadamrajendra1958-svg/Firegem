@@ -12,9 +12,29 @@ import {
   MoreVertical 
 } from "lucide-react";
 
-const MEETINGS: any[] = [];
+import { useState } from "react";
 
 export default function MeetingsPage() {
+  const [meetings, setMeetings] = useState<any[]>([]);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      const file = e.target.files[0];
+      const newMeeting = {
+        id: Date.now(),
+        client: file.name.split('.')[0] || "Uploaded Recording",
+        lead: "Pending Analysis",
+        budget: "Pending",
+        status: "Analyzing",
+        statusColor: "bg-primary",
+        pulse: true,
+        date: "Just now",
+        image: "https://picsum.photos/seed/" + Date.now() + "/200/200",
+      };
+      setMeetings([newMeeting, ...meetings]);
+    }
+  };
+
   return (
     <div className="flex-1 overflow-y-auto px-4 md:px-8 pt-6 md:pt-8 pb-12 relative bg-background w-full">
       <div className="max-w-[1200px] mx-auto">
@@ -31,15 +51,17 @@ export default function MeetingsPage() {
             </p>
           </motion.div>
           
-          <motion.button 
+          <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap"
           >
-            <CloudUpload className="w-5 h-5" />
-            <span className="text-sm tracking-wide">Upload Recording</span>
-          </motion.button>
+            <label className="cursor-pointer bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap">
+              <CloudUpload className="w-5 h-5" />
+              <span className="text-sm tracking-wide">Upload Recording</span>
+              <input type="file" className="hidden" accept="audio/*,video/*" onChange={handleFileUpload} />
+            </label>
+          </motion.div>
         </div>
 
         {/* Filters & Search */}
@@ -71,7 +93,7 @@ export default function MeetingsPage() {
 
         {/* Meeting List Grid */}
         <div className="flex flex-col gap-4">
-          {MEETINGS.length === 0 ? (
+          {meetings.length === 0 ? (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -126,13 +148,14 @@ export default function MeetingsPage() {
               <p className="text-on-surface-variant max-w-md mx-auto mb-8 leading-relaxed">
                 Upload a recording to start generating automated revenue intelligence, transcripts, and proposals.
               </p>
-              <button className="px-6 py-3 bg-primary text-background font-bold rounded-lg hover:brightness-110 transition-all flex items-center gap-2">
+              <label className="cursor-pointer px-6 py-3 bg-primary text-background font-bold rounded-lg hover:brightness-110 transition-all flex items-center gap-2">
                 <CloudUpload className="w-5 h-5" />
                 Upload Recording
-              </button>
+              <input type="file" className="hidden" accept="audio/*,video/*" onChange={handleFileUpload} />
+              </label>
             </motion.div>
           ) : (
-            MEETINGS.map((meeting, i) => (
+            meetings.map((meeting, i) => (
               <Link key={meeting.id} href={`/dashboard/meetings/${meeting.id}`}>
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
@@ -182,12 +205,12 @@ export default function MeetingsPage() {
                   </div>
                   
                   <div className="flex gap-2 shrink-0">
-                    <button className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant hover:bg-primary/20 hover:text-primary hover:border-primary/30 transition-all">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant group-hover:bg-primary/20 group-hover:text-primary group-hover:border-primary/30 transition-all">
                       <PlayCircle className="w-5 h-5" />
-                    </button>
-                    <button className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-on-surface transition-all">
+                    </div>
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-on-surface transition-all">
                       <MoreVertical className="w-5 h-5" />
-                    </button>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -206,7 +229,7 @@ export default function MeetingsPage() {
           <div className="glass-card rounded-2xl p-6 border-l-4 border-l-primary border-t-white/5 border-r-white/5 border-b-white/5 hover:border-r-white/10 hover:border-t-white/10 hover:border-b-white/10 hover:-translate-y-1 transition-all cursor-pointer">
             <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Quarterly Pipeline</p>
             <div className="flex items-baseline gap-3">
-              <span className="text-3xl font-bold text-on-surface tracking-tight">$0</span>
+              <span className="text-3xl font-bold text-on-surface tracking-tight">₹0</span>
               <span className="text-on-surface-variant text-sm font-bold flex items-center gap-0.5">0%</span>
             </div>
           </div>

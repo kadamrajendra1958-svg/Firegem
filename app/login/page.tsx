@@ -2,12 +2,25 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowRight, Eye, EyeOff, Activity, Rocket } from "lucide-react";
 import PipelineAnimation from "@/components/PipelineAnimation";
 import { motion } from "motion/react";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const email = formData.get("email") as string;
+    const name = email ? email.split('@')[0] : "User";
+    
+    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("userName", name);
+    router.push("/dashboard");
+  };
 
   return (
     <div className="flex h-screen w-full bg-surface-container-lowest text-on-surface overflow-hidden font-sans">
@@ -106,7 +119,7 @@ export default function LoginPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="space-y-6" 
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleLogin}
           >
             <div className="space-y-2 group">
               <label className="text-xs font-bold tracking-wider uppercase text-on-surface-variant group-focus-within:text-primary transition-colors block ml-1" htmlFor="email">
@@ -115,6 +128,7 @@ export default function LoginPage() {
               <input 
                 className="w-full h-14 px-4 rounded-xl bg-background/60 backdrop-blur-md border border-white/10 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all" 
                 id="email" 
+                name="email"
                 placeholder="name@revenueos.ai" 
                 type="email" 
               />

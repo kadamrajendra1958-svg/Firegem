@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { FileText, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 export default function ProposalGenerationPage() {
   return (
@@ -20,15 +21,17 @@ export default function ProposalGenerationPage() {
             </p>
           </motion.div>
           
-          <motion.button 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap"
-          >
-            <FileText className="w-5 h-5" />
-            <span className="text-sm tracking-wide">New Proposal</span>
-          </motion.button>
+          <Link href="/proposals/builder">
+            <motion.button 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: 0.1 }}
+              className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap"
+            >
+              <FileText className="w-5 h-5" />
+              <span className="text-sm tracking-wide">New Proposal</span>
+            </motion.button>
+          </Link>
         </div>
 
         <div className="flex flex-col items-center justify-center mt-12">
@@ -91,10 +94,10 @@ export default function ProposalGenerationPage() {
         <p className="text-on-surface-variant max-w-md mx-auto mb-8 leading-relaxed">
           Your pipeline is waiting. Generate your first automated proposal by analyzing a client meeting transcript.
         </p>
-        <button className="px-6 py-3 bg-primary text-background font-bold rounded-lg hover:brightness-110 transition-all flex items-center gap-2">
+        <Link href="/proposals/new" className="px-6 py-3 bg-primary text-background font-bold rounded-lg hover:brightness-110 transition-all flex items-center gap-2">
           <FileText className="w-5 h-5" />
           Generate New Proposal
-        </button>
+        </Link>
       </motion.div>
       </div>
       

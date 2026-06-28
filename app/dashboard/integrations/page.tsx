@@ -55,7 +55,7 @@ export default function IntegrationsPage() {
                   <span className="text-xs font-bold text-on-surface-variant">U2</span>
                 </div>
               </div>
-              <button className="px-4 py-2 bg-white/5 border border-white/10 text-on-surface rounded-lg hover:bg-white/10 transition-colors text-sm font-bold">
+              <button onClick={() => alert('Configuration modal will open here.')} className="px-4 py-2 bg-white/5 border border-white/10 text-on-surface rounded-lg hover:bg-white/10 transition-colors text-sm font-bold">
                 Configure
               </button>
             </div>
@@ -84,7 +84,7 @@ export default function IntegrationsPage() {
             </div>
             
             <div className="mt-8 pt-6 border-t border-white/5">
-              <button className="w-full py-3 bg-primary text-primary-foreground font-bold rounded-lg hover:brightness-110 active:scale-95 transition-all text-sm shadow-[0_0_15px_rgba(37,211,102,0.2)]">
+              <button onClick={() => alert('Zoom integration flow started.')} className="w-full py-3 bg-primary text-primary-foreground font-bold rounded-lg hover:brightness-110 active:scale-95 transition-all text-sm shadow-[0_0_15px_rgba(37,211,102,0.2)]">
                 Connect Zoom
               </button>
             </div>
@@ -113,7 +113,7 @@ export default function IntegrationsPage() {
             </div>
             
             <div className="mt-8 pt-6 border-t border-white/5">
-              <button className="w-full py-3 bg-transparent border border-white/20 text-on-surface font-bold rounded-lg hover:bg-white/5 active:scale-95 transition-all text-sm">
+              <button onClick={() => alert('Webhook setup instructions sent to email.')} className="w-full py-3 bg-transparent border border-white/20 text-on-surface font-bold rounded-lg hover:bg-white/5 active:scale-95 transition-all text-sm">
                 Setup Webhooks
               </button>
             </div>

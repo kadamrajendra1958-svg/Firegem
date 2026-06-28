@@ -164,28 +164,28 @@ export default function ProposalPreviewPage() {
                   <tr className="hover:bg-white/5 transition-colors">
                     <td className="px-6 py-4 text-sm font-medium text-on-surface print:text-black">Regional Infrastructure</td>
                     <td className="px-6 py-4"><span className="px-2 py-1 rounded bg-primary/10 text-primary text-[10px] font-bold print:border print:border-black print:text-black print:bg-transparent">CRITICAL</span></td>
-                    <td className="px-6 py-4 font-bold text-base text-right print:text-black">$1,250,000</td>
+                    <td className="px-6 py-4 font-bold text-base text-right print:text-black">₹1,250,000</td>
                   </tr>
                   <tr className="hover:bg-white/5 transition-colors">
                     <td className="px-6 py-4 text-sm font-medium text-on-surface print:text-black">AI Orchestration & ML Layers</td>
                     <td className="px-6 py-4"><span className="px-2 py-1 rounded bg-secondary/10 text-secondary text-[10px] font-bold print:border print:border-black print:text-black print:bg-transparent">HIGH</span></td>
-                    <td className="px-6 py-4 font-bold text-base text-right print:text-black">$840,000</td>
+                    <td className="px-6 py-4 font-bold text-base text-right print:text-black">₹840,000</td>
                   </tr>
                   <tr className="hover:bg-white/5 transition-colors">
                     <td className="px-6 py-4 text-sm font-medium text-on-surface print:text-black">Global Compliance Framework</td>
                     <td className="px-6 py-4"><span className="px-2 py-1 rounded bg-secondary/10 text-secondary text-[10px] font-bold print:border print:border-black print:text-black print:bg-transparent">HIGH</span></td>
-                    <td className="px-6 py-4 font-bold text-base text-right print:text-black">$310,000</td>
+                    <td className="px-6 py-4 font-bold text-base text-right print:text-black">₹310,000</td>
                   </tr>
                   <tr className="hover:bg-white/5 transition-colors">
                     <td className="px-6 py-4 text-sm font-medium text-on-surface print:text-black">Human Capital Alignment</td>
                     <td className="px-6 py-4"><span className="px-2 py-1 rounded bg-white/5 text-on-surface-variant text-[10px] font-bold print:border print:border-black print:text-black print:bg-transparent">MEDIUM</span></td>
-                    <td className="px-6 py-4 font-bold text-base text-right print:text-black">$450,000</td>
+                    <td className="px-6 py-4 font-bold text-base text-right print:text-black">₹450,000</td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr className="bg-surface-container-highest/20 print:bg-gray-100 border-t border-white/10 print:border-black/20">
                     <td className="px-6 py-5 font-bold text-on-surface uppercase tracking-widest text-xs print:text-black" colSpan={2}>Total Expansion Budget</td>
-                    <td className="px-6 py-5 font-bold text-xl text-primary text-right print:text-black">$2,850,000</td>
+                    <td className="px-6 py-5 font-bold text-xl text-primary text-right print:text-black">₹2,850,000</td>
                   </tr>
                 </tfoot>
               </table>

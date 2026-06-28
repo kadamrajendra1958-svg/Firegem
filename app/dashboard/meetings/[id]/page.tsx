@@ -17,8 +17,10 @@ import {
   CheckCircle2
 } from "lucide-react";
 
+const INITIAL_TASKS: any[] = [];
+
 export default function MeetingSummaryPage() {
-  const [tasks, setTasks] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<any[]>(INITIAL_TASKS);
 
   const toggleTask = (id: number) => {
     setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
@@ -62,8 +64,8 @@ export default function MeetingSummaryPage() {
                 <h3 className="text-2xl font-bold text-on-surface">Executive Overview</h3>
               </div>
               <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(37,211,102,0.8)]"></span>
-                <span className="text-xs font-bold text-on-surface-variant">Waiting</span>
+                <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(37,211,102,0.8)]"></span>
+                <span className="text-xs font-bold text-on-surface-variant">Analyzed</span>
               </div>
             </div>
             <p className="text-lg leading-relaxed text-on-surface-variant font-medium text-center py-8">
@@ -199,11 +201,40 @@ export default function MeetingSummaryPage() {
                 <CheckCircle2 className="w-6 h-6 text-primary" />
                 <h3 className="text-xl font-bold text-on-surface">Action Items</h3>
               </div>
-              <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">0 Total Tasks</span>
+              <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">{tasks.length} Total Tasks</span>
             </div>
             
-            <div className="py-8 text-center text-on-surface-variant">
-              No action items assigned.
+            <div className="space-y-3">
+              {tasks.length > 0 ? tasks.map(task => (
+                <div 
+                  key={task.id}
+                  onClick={() => toggleTask(task.id)}
+                  className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${
+                    task.completed 
+                      ? 'bg-primary/5 border-primary/20 opacity-60' 
+                      : 'bg-white/5 border-white/10 hover:border-white/20'
+                  }`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`w-5 h-5 rounded flex items-center justify-center border ${
+                      task.completed ? 'bg-primary border-primary' : 'border-on-surface-variant'
+                    }`}>
+                      {task.completed && <Check className="w-3 h-3 text-background" />}
+                    </div>
+                    <span className={`text-sm font-medium ${task.completed ? 'line-through text-on-surface-variant' : 'text-on-surface'}`}>
+                      {task.text}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                    <span>{task.owner}</span>
+                    <span className={task.deadline.includes("Tomorrow") ? "text-error" : ""}>{task.deadline}</span>
+                  </div>
+                </div>
+              )) : (
+                <div className="py-8 text-center text-on-surface-variant">
+                  No action items assigned.
+                </div>
+              )}
             </div>
           </motion.div>
           

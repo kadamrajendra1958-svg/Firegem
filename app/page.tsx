@@ -67,8 +67,8 @@ export default function MarketingPage() {
             <Link className="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="#">Demo</Link>
           </nav>
           <div className="flex items-center gap-6">
-            <Link className="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors hidden md:block" href="/dashboard">Login</Link>
-            <Link href="/dashboard" className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg text-sm font-bold hover:opacity-90 active:scale-95 transition-all shadow-[0_0_15px_rgba(37,211,102,0.3)]">
+            <Link className="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors hidden md:block" href="/login">Login</Link>
+            <Link href="/signup" className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg text-sm font-bold hover:opacity-90 active:scale-95 transition-all shadow-[0_0_15px_rgba(37,211,102,0.3)]">
               Start Free Trial
             </Link>
           </div>
@@ -101,14 +101,10 @@ export default function MarketingPage() {
               Automatically generate transcripts, summaries, proposals and follow-ups from Zoom and Google Meet conversations. Stop losing deals to manual entry.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <Link href="/dashboard" className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-bold hover:opacity-90 active:scale-95 transition-all flex items-center gap-3 shadow-[0_4px_0_0_#1b9a4a]">
+              <Link href="/signup" className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-bold hover:opacity-90 active:scale-95 transition-all flex items-center gap-3 shadow-[0_4px_0_0_#1b9a4a]">
                 Get Started Free
                 <ArrowRight className="w-5 h-5" />
               </Link>
-              <button className="border border-secondary text-secondary px-8 py-4 rounded-lg font-bold hover:bg-white/5 active:scale-95 transition-all flex items-center gap-3">
-                <PlayCircle className="w-5 h-5" />
-                Watch Demo
-              </button>
             </div>
             
             <div className="pt-8 flex items-center gap-8">
@@ -222,7 +218,7 @@ export default function MarketingPage() {
                 </div>
               </div>
               <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Revenue Closed</p>
-              <p className="text-3xl font-extrabold text-on-surface">$1.2M</p>
+              <p className="text-3xl font-extrabold text-on-surface">₹1.2M</p>
               
               {/* Small Sparkline */}
               <svg className="w-full h-8 mt-4" viewBox="0 0 100 30">
@@ -463,7 +459,7 @@ export default function MarketingPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-xl font-black text-primary drop-shadow-[0_0_10px_rgba(37,211,102,0.5)]">+$240k</p>
+                        <p className="text-xl font-black text-primary drop-shadow-[0_0_10px_rgba(37,211,102,0.5)]">+₹240k</p>
                       </div>
                     </motion.div>
                   </div>
@@ -516,7 +512,7 @@ export default function MarketingPage() {
               </div>
               <div className="p-6 bg-surface-container-lowest">
                 <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
-                  <div className="text-2xl font-bold text-primary">$1,240,000</div>
+                  <div className="text-2xl font-bold text-primary">₹1,240,000</div>
                   <span className="text-xs font-semibold text-on-surface-variant bg-white/5 px-2 py-1 rounded">Drafted 2h ago</span>
                 </div>
                 <div className="flex items-center gap-4">
@@ -544,7 +540,7 @@ export default function MarketingPage() {
               </div>
               <div className="p-6 bg-surface-container-lowest">
                 <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
-                  <div className="text-2xl font-bold text-secondary">$450,000</div>
+                  <div className="text-2xl font-bold text-secondary">₹450,000</div>
                   <span className="text-xs font-semibold text-secondary bg-secondary/10 px-2 py-1 rounded">Awaiting Signature</span>
                 </div>
                 <div className="flex items-center gap-4">
@@ -572,7 +568,7 @@ export default function MarketingPage() {
               </div>
               <div className="p-6 bg-surface-container-lowest">
                 <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
-                  <div className="text-2xl font-bold text-tertiary">$2,800,000</div>
+                  <div className="text-2xl font-bold text-tertiary">₹2,800,000</div>
                   <span className="text-xs font-semibold text-tertiary bg-tertiary/10 px-2 py-1 rounded">In Review</span>
                 </div>
                 <div className="flex items-center gap-4">
@@ -639,7 +635,7 @@ export default function MarketingPage() {
               <h3 className="text-2xl font-bold mb-2 text-on-surface">Scale</h3>
               <p className="text-on-surface-variant text-sm mb-8 font-medium">For emerging revenue teams.</p>
               <div className="flex items-baseline gap-2 mb-8 border-b border-white/5 pb-8">
-                <span className="text-4xl font-extrabold text-on-surface">$2,400</span>
+                <span className="text-4xl font-extrabold text-on-surface">₹2,400</span>
                 <span className="text-on-surface-variant font-semibold">/mo</span>
               </div>
               <ul className="space-y-4 mb-10 flex-1">
@@ -660,7 +656,7 @@ export default function MarketingPage() {
               <h3 className="text-2xl font-bold mb-2 text-on-surface">Growth</h3>
               <p className="text-on-surface-variant text-sm mb-8 font-medium">For high-velocity closing teams.</p>
               <div className="flex items-baseline gap-2 mb-8 border-b border-white/5 pb-8">
-                <span className="text-5xl font-extrabold text-primary">$5,800</span>
+                <span className="text-5xl font-extrabold text-primary">₹5,800</span>
                 <span className="text-on-surface-variant font-semibold">/mo</span>
               </div>
               <ul className="space-y-4 mb-10 flex-1">

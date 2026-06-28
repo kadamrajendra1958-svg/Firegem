@@ -49,7 +49,7 @@ export default function MeetingsPage() {
                   </div>
                   <div className="text-right">
                     <p className="text-on-surface-variant text-[10px] font-bold uppercase tracking-wider mb-1">Projected ARR Impact</p>
-                    <p className="text-3xl font-extrabold text-primary revenue-glow">$4.2M</p>
+                    <p className="text-3xl font-extrabold text-primary revenue-glow">₹4.2M</p>
                   </div>
                 </div>
               </div>
@@ -75,7 +75,7 @@ export default function MeetingsPage() {
                   </div>
                   <div className="text-right">
                     <p className="text-on-surface-variant text-[10px] font-bold uppercase tracking-wider mb-1">Projected ARR Impact</p>
-                    <p className="text-3xl font-extrabold text-on-surface">$1.8M</p>
+                    <p className="text-3xl font-extrabold text-on-surface">₹1.8M</p>
                   </div>
                 </div>
               </div>
@@ -174,7 +174,7 @@ export default function MeetingsPage() {
                   </div>
                   <div className="p-4 bg-white/5 rounded-xl">
                     <p className="text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">LTV Est.</p>
-                    <p className="text-2xl font-bold text-on-surface">$12M</p>
+                    <p className="text-2xl font-bold text-on-surface">₹12M</p>
                   </div>
                 </div>
               </div>

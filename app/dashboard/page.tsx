@@ -95,11 +95,11 @@ export default function DashboardPage() {
             <span className="text-xs font-bold uppercase tracking-widest text-on-surface-variant group-hover:text-on-surface transition-colors">Revenue Opportunities</span>
             <div className="flex items-center gap-1.5 text-primary bg-primary/10 px-2 py-1 rounded">
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span className="text-[10px] font-bold uppercase tracking-wider">92% Confidence</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider">0% Confidence</span>
             </div>
           </div>
           <div className="flex items-baseline gap-1 mt-1">
-            <span className="text-2xl font-bold text-on-surface-variant">$</span>
+            <span className="text-2xl font-bold text-on-surface-variant">₹</span>
             <h3 className="text-4xl font-bold text-on-surface tracking-tight">0</h3>
           </div>
           <p className="text-sm text-on-surface-variant/80 mt-3 font-medium leading-relaxed">
@@ -108,7 +108,7 @@ export default function DashboardPage() {
           <div className="mt-5 pt-5 border-t border-white/5 flex justify-between">
             <div className="text-center">
               <p className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mb-1">Avg Deal Size</p>
-              <p className="font-bold text-primary text-sm">$0</p>
+              <p className="font-bold text-primary text-sm">₹0</p>
             </div>
             <div className="text-center">
               <p className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mb-1">Cycle Time</p>
@@ -250,20 +250,11 @@ export default function DashboardPage() {
                 animate={{ pathLength: 1 }}
                 transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
                 className="w-full" 
-                d="M0,200 L100,180 L200,175 L300,160 L400,150 L500,130 L600,125 L700,110 L800,100 L900,90 L1000,85" 
+                d="M0,280 L1000,280" 
                 fill="none" 
                 stroke="#71717A" 
                 strokeDasharray="8,6" 
                 strokeWidth="2" 
-                vectorEffect="non-scaling-stroke"
-              ></motion.path>
-              {/* Actual Path Fill */}
-              <motion.path 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1 }}
-                d="M0,210 L100,205 L200,195 L300,170 L400,165 L500,160 L600,145 L700,135 L800,115 L900,95 L1000,80 L1000,288 L0,288 Z" 
-                fill="url(#chartGradient)" 
                 vectorEffect="non-scaling-stroke"
               ></motion.path>
               {/* Actual Path Stroke */}
@@ -271,7 +262,7 @@ export default function DashboardPage() {
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
                 transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }}
-                d="M0,210 L100,205 L200,195 L300,170 L400,165 L500,160 L600,145 L700,135 L800,115 L900,95 L1000,80" 
+                d="M0,280 L1000,280" 
                 fill="none" 
                 stroke="#FFFFFF" 
                 strokeWidth="2" 

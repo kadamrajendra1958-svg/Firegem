@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   Video,
@@ -27,7 +27,27 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
+  const [userName, setUserName] = useState("User");
+
+  useEffect(() => {
+    const isAuth = localStorage.getItem("isAuthenticated");
+    if (!isAuth) {
+      router.push("/login");
+    } else {
+      const storedName = localStorage.getItem("userName");
+      if (storedName) {
+        setUserName(storedName);
+      }
+      setIsAuthChecking(false);
+    }
+  }, [router]);
+
+  if (isAuthChecking) {
+    return <div className="min-h-screen flex items-center justify-center bg-background"><div className="w-8 h-8 rounded-full border-4 border-primary border-t-transparent animate-spin"></div></div>;
+  }
   
   return (
     <div className="min-h-screen bg-background text-on-background font-sans selection:bg-primary/30 overflow-hidden flex relative print:bg-white print:text-black print:overflow-visible print:block">
@@ -209,15 +229,20 @@ export default function DashboardLayout({
             <div className="flex items-center gap-3 pl-2 md:pl-4 border-l border-white/10">
               <div className="text-right hidden sm:block">
                 <p className="text-sm text-on-surface font-bold leading-none">
-                  User
+                  {userName}
                 </p>
                 <p className="text-[10px] text-on-surface-variant uppercase tracking-wider mt-1">
                   Guest
                 </p>
               </div>
-              <div className="relative w-8 h-8 md:w-10 md:h-10 rounded-full border border-primary/30 overflow-hidden shrink-0 flex items-center justify-center bg-surface-container-highest">
-                <span className="text-sm font-bold text-on-surface-variant">U</span>
-              </div>
+              <button onClick={() => {
+                localStorage.removeItem("isAuthenticated");
+                localStorage.removeItem("userName");
+                router.push("/");
+              }} className="relative w-8 h-8 md:w-10 md:h-10 rounded-full border border-primary/30 overflow-hidden shrink-0 flex items-center justify-center bg-surface-container-highest hover:border-primary transition-all group" title="Sign Out">
+                <span className="text-sm font-bold text-on-surface-variant group-hover:hidden">{userName.charAt(0).toUpperCase()}</span>
+                <X className="w-4 h-4 text-primary hidden group-hover:block" />
+              </button>
             </div>
           </div>
         </header>

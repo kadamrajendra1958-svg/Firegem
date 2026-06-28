@@ -1,10 +1,20 @@
 "use client";
 
 import { Search, Bell, History } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function Header({ title }: { title?: string }) {
+  const [userName, setUserName] = useState("User");
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("userName");
+    if (storedName) {
+      setUserName(storedName);
+    }
+  }, []);
+
   return (
-    <header className="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-background/40 backdrop-blur-md border-b border-white/5 flex justify-between items-center px-8 py-4 h-16">
+    <header className="fixed top-0 right-0 w-full lg:w-[calc(100%-16rem)] z-40 bg-background/40 backdrop-blur-md border-b border-white/5 flex justify-between items-center px-8 py-4 h-16">
       <div className="flex items-center gap-8">
         <h2 className="text-xl text-on-surface font-bold">{title || "Overview"}</h2>
       </div>
@@ -27,10 +37,9 @@ export function Header({ title }: { title?: string }) {
             <Bell className="w-5 h-5" />
             <span className="absolute top-0 right-0 w-2 h-2 bg-error rounded-full border border-background"></span>
           </button>
-          <div className="h-8 w-8 rounded-full bg-surface-container-highest border border-primary/20 overflow-hidden">
-            {/* Using a solid color or initials since we removed fake images */}
-            <div className="w-full h-full flex items-center justify-center bg-primary/20 text-primary font-bold text-xs">
-              AD
+          <div className="h-8 w-8 rounded-full bg-surface-container-highest border border-primary/20 overflow-hidden cursor-pointer" title={userName}>
+            <div className="w-full h-full flex items-center justify-center bg-primary/20 text-primary font-bold text-xs uppercase">
+              {userName.substring(0, 2)}
             </div>
           </div>
         </div>
