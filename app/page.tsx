@@ -77,13 +77,26 @@ export default function MarketingPage() {
 
       <main className="relative pt-32 min-h-screen">
         {/* Background Ambient Glows */}
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px] pointer-events-none"></div>
-        <div className="absolute top-[40%] right-[-5%] w-[30%] h-[30%] rounded-full bg-secondary/5 blur-[100px] pointer-events-none"></div>
-        <div className="absolute bottom-[10%] left-[20%] w-[50%] h-[30%] rounded-full bg-tertiary/5 blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px] pointer-events-none -z-10"></div>
+        <div className="absolute top-[40%] right-[-5%] w-[30%] h-[30%] rounded-full bg-secondary/5 blur-[100px] pointer-events-none -z-10"></div>
+        <div className="absolute bottom-[10%] left-[20%] w-[50%] h-[30%] rounded-full bg-tertiary/5 blur-[120px] pointer-events-none -z-10"></div>
+
+        {/* HERO BACKGROUND VIDEO */}
+        <div className="absolute top-0 left-0 w-full h-[120vh] overflow-hidden -z-20 pointer-events-none">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="w-full h-full object-cover opacity-30 saturate-0"
+          >
+            <source src="https://videos.pexels.com/video-files/3183154/3183154-hd_1920_1080_25fps.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/90 to-background"></div>
+        </div>
 
         {/* HERO SECTION */}
         <section className="container mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
-          {/* Left Content Area */}
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

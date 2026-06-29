@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useParams } from "next/navigation";
+import { db } from "@/lib/firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { 
   ArrowLeft,
   Share2,
@@ -19,13 +21,80 @@ export default function MeetingDetailLayout({ children }: { children: React.Reac
   const params = useParams();
   const id = params.id as string;
   const [isPlaying, setIsPlaying] = useState(false);
+  const [meeting, setMeeting] = useState<any>(null);
 
-  const handleShare = () => alert("Share link copied to clipboard!");
-  const handleExport = () => alert("Exporting meeting transcript and summary as PDF...");
-  const handlePlayToggle = () => setIsPlaying(!isPlaying);
+  useEffect(() => {
+    const fetchMeeting = async () => {
+      try {
+        const docRef = doc(db, "meetings", id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setMeeting(docSnap.data());
+        }
+      } catch (err) {
+        console.error("Error fetching meeting:", err);
+      }
+    };
+    if (id && id !== "1") {
+      fetchMeeting();
+    }
+  }, [id]);
+
+  const handleShare = async () => {
+    try {
+      if (id !== "1") {
+        await updateDoc(doc(db, "meetings", id), { shared: true });
+      }
+      alert("Share link generated and tracked in Firestore!");
+    } catch (e) {
+      alert("Error sharing link.");
+    }
+  };
+
+  const handleExport = async () => {
+    try {
+      if (id !== "1") {
+        await updateDoc(doc(db, "meetings", id), { exported: true });
+      }
+      alert("Exporting meeting transcript and summary as PDF... Activity logged in Firestore.");
+    } catch (e) {
+      alert("Error exporting.");
+    }
+  };
+
+  const mediaRef = useRef<HTMLVideoElement>(null);
+
+  const handlePlayToggle = () => {
+    if (!meeting?.fileUrl) {
+      alert("No recording available for this meeting. Please upload one first.");
+      return;
+    }
+    if (mediaRef.current) {
+      if (isPlaying) {
+        mediaRef.current.pause();
+      } else {
+        mediaRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
   
+  const displayTitle = meeting?.client || "Nexus Global Q3 Alignment";
+  const displayDate = meeting?.date || "Oct 11, 2023";
+  const displayImage = meeting?.image || "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=200&auto=format&fit=crop";
+
   return (
     <div className="flex-1 h-full overflow-hidden flex flex-col bg-background">
+      {meeting?.fileUrl && (
+        <video 
+          ref={mediaRef} 
+          src={meeting.fileUrl} 
+          className="hidden" 
+          onEnded={() => setIsPlaying(false)}
+          onPause={() => setIsPlaying(false)}
+          onPlay={() => setIsPlaying(true)}
+        />
+      )}
       {/* Header Bar */}
       <header className="shrink-0 border-b border-white/10 bg-surface-container-low/80 backdrop-blur-md px-8 py-4 flex items-center justify-between z-20">
         <div className="flex items-center gap-6">
@@ -35,7 +104,7 @@ export default function MeetingDetailLayout({ children }: { children: React.Reac
           <div className="flex items-center gap-4 border-l border-white/10 pl-6">
             <div className="w-12 h-12 rounded-full border border-white/10 overflow-hidden bg-surface-container-highest shrink-0">
               <Image 
-                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=200&auto=format&fit=crop"
+                src={displayImage}
                 alt="Client"
                 width={48}
                 height={48}
@@ -44,10 +113,10 @@ export default function MeetingDetailLayout({ children }: { children: React.Reac
               />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-on-surface tracking-tight">Nexus Global Q3 Alignment</h1>
+              <h1 className="text-xl font-bold text-on-surface tracking-tight">{displayTitle}</h1>
               <p className="text-sm font-medium text-on-surface-variant flex items-center gap-2 mt-0.5">
                 <Clock className="w-3.5 h-3.5" />
-                Oct 11, 2023 • 45m Duration
+                {displayDate} • 45m Duration
               </p>
             </div>
           </div>

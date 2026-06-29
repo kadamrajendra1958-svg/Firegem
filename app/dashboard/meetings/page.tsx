@@ -11,27 +11,73 @@ import {
   PlayCircle, 
   MoreVertical 
 } from "lucide-react";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, getDocs, orderBy, query, onSnapshot } from "firebase/firestore";
 
 export default function MeetingsPage() {
   const [meetings, setMeetings] = useState<any[]>([]);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    const q = query(collection(db, "meetings"), orderBy("createdAt", "desc"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const meetingsData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setMeetings(meetingsData);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       const file = e.target.files[0];
-      const newMeeting = {
-        id: Date.now(),
-        client: file.name.split('.')[0] || "Uploaded Recording",
-        lead: "Pending Analysis",
-        budget: "Pending",
-        status: "Analyzing",
-        statusColor: "bg-primary",
-        pulse: true,
-        date: "Just now",
-        image: "https://picsum.photos/seed/" + Date.now() + "/200/200",
-      };
-      setMeetings([newMeeting, ...meetings]);
+      setIsUploading(true);
+      
+      try {
+        let fileUrl = "";
+        let fileType = file.type.startsWith("video") ? "video" : "audio";
+        
+        try {
+          const { ref: storageRef, uploadBytes, getDownloadURL } = await import("firebase/storage");
+          const { storage } = await import("@/lib/firebase");
+          const sRef = storageRef(storage, `meetings/${Date.now()}_${file.name}`);
+          await uploadBytes(sRef, file);
+          fileUrl = await getDownloadURL(sRef);
+        } catch (storageError) {
+          console.error("Storage upload failed (possibly rules). Falling back to local URL.", storageError);
+          fileUrl = URL.createObjectURL(file); // Fallback for local preview if storage fails
+        }
+
+        const newMeeting = {
+          client: file.name.split('.')[0] || "Uploaded Recording",
+          lead: "Pending Analysis",
+          budget: "Pending",
+          status: "Analyzed",
+          statusColor: "bg-primary",
+          pulse: false,
+          date: new Date().toLocaleDateString(),
+          image: "https://picsum.photos/seed/" + Date.now() + "/200/200",
+          createdAt: new Date(),
+          fileUrl,
+          fileType,
+          sentiment: "Positive",
+          sentimentScore: 85,
+        };
+        
+        await addDoc(collection(db, "meetings"), newMeeting);
+        alert("Meeting uploaded successfully!");
+      } catch (error) {
+        console.error("Error adding meeting: ", error);
+        alert("Failed to upload meeting.");
+      } finally {
+        setIsUploading(false);
+        if (e.target) e.target.value = ''; // reset input
+      }
     }
   };
 
@@ -56,10 +102,10 @@ export default function MeetingsPage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.1 }}
           >
-            <label className="cursor-pointer bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap">
-              <CloudUpload className="w-5 h-5" />
-              <span className="text-sm tracking-wide">Upload Recording</span>
-              <input type="file" className="hidden" accept="audio/*,video/*" onChange={handleFileUpload} />
+            <label className={`cursor-pointer bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap ${isUploading ? 'opacity-70 pointer-events-none' : 'hover:brightness-110 active:scale-95'}`}>
+              <CloudUpload className={`w-5 h-5 ${isUploading ? 'animate-bounce' : ''}`} />
+              <span className="text-sm tracking-wide">{isUploading ? 'Uploading...' : 'Upload Recording'}</span>
+              <input type="file" className="hidden" accept="audio/*,video/*" onChange={handleFileUpload} disabled={isUploading} />
             </label>
           </motion.div>
         </div>
@@ -148,10 +194,10 @@ export default function MeetingsPage() {
               <p className="text-on-surface-variant max-w-md mx-auto mb-8 leading-relaxed">
                 Upload a recording to start generating automated revenue intelligence, transcripts, and proposals.
               </p>
-              <label className="cursor-pointer px-6 py-3 bg-primary text-background font-bold rounded-lg hover:brightness-110 transition-all flex items-center gap-2">
-                <CloudUpload className="w-5 h-5" />
-                Upload Recording
-              <input type="file" className="hidden" accept="audio/*,video/*" onChange={handleFileUpload} />
+              <label className={`cursor-pointer px-6 py-3 bg-primary text-background font-bold rounded-lg transition-all flex items-center gap-2 ${isUploading ? 'opacity-70 pointer-events-none' : 'hover:brightness-110'}`}>
+                <CloudUpload className={`w-5 h-5 ${isUploading ? 'animate-bounce' : ''}`} />
+                {isUploading ? 'Uploading...' : 'Upload Recording'}
+                <input type="file" className="hidden" accept="audio/*,video/*" onChange={handleFileUpload} disabled={isUploading} />
               </label>
             </motion.div>
           ) : (

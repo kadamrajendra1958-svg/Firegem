@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
+import { useParams } from "next/navigation";
+import { db } from "@/lib/firebase";
+import { doc, collection, addDoc, getDoc } from "firebase/firestore";
 import { 
   Search, 
   Copy, 
@@ -22,21 +25,56 @@ const TRANSCRIPT: any[] = [
 ];
 
 export default function TranscriptPage() {
+  const params = useParams();
+  const id = params.id as string;
   const [searchQuery, setSearchQuery] = useState("");
   const [copied, setCopied] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [meeting, setMeeting] = useState<any>(null);
+
+  useEffect(() => {
+    if (id && id !== "1") {
+      getDoc(doc(db, "meetings", id)).then(snap => {
+        if (snap.exists()) setMeeting(snap.data());
+      });
+    }
+  });
+
+  const activeTranscript = (id === "1" || !meeting) ? TRANSCRIPT : [
+    { id: 1, time: "00:00", speaker: "System", type: "internal", text: `[Automated Audio Analysis Started for ${meeting?.client || "Recording"}]` },
+    { id: 2, time: "00:05", speaker: "Speaker 1", type: "client", text: "Hello, testing the audio upload..." },
+    { id: 3, time: "00:15", speaker: "Speaker 2", type: "internal", text: "Audio captured successfully. AI analysis has simulated this transcript based on the media file provided." },
+    { id: 4, time: "00:30", speaker: "System", type: "internal", text: "[Analysis complete]" }
+  ];
 
   const handleCopy = () => {
-    const textToCopy = TRANSCRIPT.map(t => `[${t.time}] ${t.speaker}: ${t.text}`).join("\n");
+    const textToCopy = activeTranscript.map(t => `[${t.time}] ${t.speaker}: ${t.text}`).join("\n");
     navigator.clipboard.writeText(textToCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleGenerateEmail = () => {
-    alert("Drafting follow-up email based on transcript...\n\nDraft saved to your outbox!");
+  const handleGenerateEmail = async () => {
+    setIsGenerating(true);
+    try {
+      const emailContent = `Hi Team,\n\nFollowing up on our recent discussion regarding Project Obsidian Q4 Expansion.\n\nKey Action Items:\n- Provide detailed cost breakdown for APAC localized payment gateways.\n- Finalize compliance check for Nov 15 launch.\n\nBest,\nRevenue OS`;
+      
+      await addDoc(collection(db, "emails"), {
+        meetingId: id,
+        content: emailContent,
+        status: "Draft",
+        createdAt: new Date(),
+      });
+      alert("Drafting follow-up email based on transcript...\n\nDraft saved to your outbox in Firestore!");
+    } catch (error) {
+      console.error("Error generating email", error);
+      alert("Failed to save draft to Firestore.");
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
-  const filteredTranscript = TRANSCRIPT.filter(t => 
+  const filteredTranscript = activeTranscript.filter(t => 
     t.text.toLowerCase().includes(searchQuery.toLowerCase()) || 
     t.speaker.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -191,10 +229,11 @@ export default function TranscriptPage() {
         <div className="shrink-0 p-6 border-t border-white/5 bg-background/50">
           <button 
             onClick={handleGenerateEmail}
-            className="w-full py-3 rounded-lg bg-surface-container-highest border border-white/10 hover:border-primary/50 text-sm font-bold text-on-surface transition-all flex items-center justify-center gap-2"
+            disabled={isGenerating}
+            className="w-full py-3 rounded-lg bg-surface-container-highest border border-white/10 hover:border-primary/50 text-sm font-bold text-on-surface transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
             <Bot className="w-4 h-4 text-primary" />
-            Generate Follow-up Email
+            {isGenerating ? "Generating..." : "Generate Follow-up Email"}
           </button>
         </div>
       </div>

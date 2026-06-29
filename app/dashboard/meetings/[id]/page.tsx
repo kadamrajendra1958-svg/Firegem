@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
+import { useParams } from "next/navigation";
+import { db } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { 
   Sparkles, 
   Smile, 
@@ -24,7 +27,22 @@ const INITIAL_TASKS: any[] = [
 ];
 
 export default function MeetingSummaryPage() {
+  const params = useParams();
+  const id = params.id as string;
   const [tasks, setTasks] = useState<any[]>(INITIAL_TASKS);
+  const [meeting, setMeeting] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (id && id !== "1") {
+      getDoc(doc(db, "meetings", id)).then(snap => {
+        if (snap.exists()) setMeeting(snap.data());
+        setIsLoading(false);
+      });
+    } else {
+      setIsLoading(false);
+    }
+  }, [id]);
 
   const toggleTask = (id: number) => {
     setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
@@ -73,7 +91,10 @@ export default function MeetingSummaryPage() {
               </div>
             </div>
             <p className="text-lg leading-relaxed text-on-surface-variant font-medium text-left py-4">
-              The Nexus Global team is highly aligned on the Q4 expansion strategy. The primary focus is shifting resources toward the APAC region, with a projected 15% increase in budget allocation. Key stakeholders agreed that minimizing friction in onboarding is critical for the launch next month. Overall sentiment was overwhelmingly positive, although timeline constraints remain a notable concern.
+              {meeting?.client === "Nexus Global Q3 Alignment" || !meeting ? 
+                "The Nexus Global team is highly aligned on the Q4 expansion strategy. The primary focus is shifting resources toward the APAC region, with a projected 15% increase in budget allocation. Key stakeholders agreed that minimizing friction in onboarding is critical for the launch next month. Overall sentiment was overwhelmingly positive, although timeline constraints remain a notable concern."
+                : `Analysis for ${meeting.client}: The conversation covered multiple key areas. Stakeholders are aligned on general direction, but identified several action items to follow up on before the next milestone. Overall sentiment was extracted as ${meeting.sentiment || "Positive"}.`
+              }
             </p>
             
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-white/5 pt-8">
