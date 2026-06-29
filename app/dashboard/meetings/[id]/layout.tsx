@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useParams } from "next/navigation";
@@ -8,6 +9,7 @@ import {
   Share2,
   Download,
   PlayCircle,
+  PauseCircle,
   Clock
 } from "lucide-react";
 import { motion } from "motion/react";
@@ -16,6 +18,11 @@ export default function MeetingDetailLayout({ children }: { children: React.Reac
   const pathname = usePathname();
   const params = useParams();
   const id = params.id as string;
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleShare = () => alert("Share link copied to clipboard!");
+  const handleExport = () => alert("Exporting meeting transcript and summary as PDF...");
+  const handlePlayToggle = () => setIsPlaying(!isPlaying);
   
   return (
     <div className="flex-1 h-full overflow-hidden flex flex-col bg-background">
@@ -62,17 +69,20 @@ export default function MeetingDetailLayout({ children }: { children: React.Reac
         </div>
         
         <div className="flex items-center gap-3">
-          <button className="px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-colors flex items-center gap-2 text-sm font-bold text-on-surface-variant">
+          <button onClick={handleShare} className="px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-colors flex items-center gap-2 text-sm font-bold text-on-surface-variant">
             <Share2 className="w-4 h-4" />
             Share
           </button>
-          <button className="px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-colors flex items-center gap-2 text-sm font-bold text-on-surface-variant">
+          <button onClick={handleExport} className="px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-colors flex items-center gap-2 text-sm font-bold text-on-surface-variant">
             <Download className="w-4 h-4" />
             Export
           </button>
-          <button className="px-5 py-2 rounded-lg bg-primary text-primary-foreground font-bold flex items-center gap-2 hover:brightness-110 transition-all shadow-[0_0_15px_rgba(37,211,102,0.2)]">
-            <PlayCircle className="w-4 h-4" />
-            Play Recording
+          <button 
+            onClick={handlePlayToggle}
+            className="px-5 py-2 rounded-lg bg-primary text-primary-foreground font-bold flex items-center gap-2 hover:brightness-110 transition-all shadow-[0_0_15px_rgba(37,211,102,0.2)]"
+          >
+            {isPlaying ? <PauseCircle className="w-4 h-4" /> : <PlayCircle className="w-4 h-4" />}
+            {isPlaying ? "Pause Recording" : "Play Recording"}
           </button>
         </div>
       </header>

@@ -12,7 +12,14 @@ import {
   Check
 } from "lucide-react";
 
-const TRANSCRIPT: any[] = [];
+const TRANSCRIPT: any[] = [
+  { id: 1, time: "00:00", speaker: "Alex", type: "internal", text: "Alright, let's get started. Thanks for joining everyone. The goal today is to align on the Q4 expansion for Project Obsidian." },
+  { id: 2, time: "00:45", speaker: "Sam", type: "client", text: "Thanks Alex. We're excited, but as we noted in the pre-read, our main concern right now is the budget allocation for the APAC region." },
+  { id: 3, time: "01:20", speaker: "Alex", type: "internal", text: "Understood. We've actually modeled a 15% increase in budget for that specific region to ensure we can scale the infrastructure and provide 24/7 localized support." },
+  { id: 4, time: "02:10", speaker: "Sam", type: "client", text: "That sounds promising. Would that cover the localized payment gateways as well? We need Alipay and WeChat Pay integrated before the beta." },
+  { id: 5, time: "02:35", speaker: "Alex", type: "internal", text: "Yes, those are included in the revised scope. We're aiming for a Nov 15 beta launch for the APAC region. Does that timeline work for you?" },
+  { id: 6, time: "03:15", speaker: "Sam", type: "client", text: "Nov 15 is tight, but if we can get the compliance and data migration sorted by then, I can approve the $1.2M budget." }
+];
 
 export default function TranscriptPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,6 +30,10 @@ export default function TranscriptPage() {
     navigator.clipboard.writeText(textToCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleGenerateEmail = () => {
+    alert("Drafting follow-up email based on transcript...\n\nDraft saved to your outbox!");
   };
 
   const filteredTranscript = TRANSCRIPT.filter(t => 
@@ -125,8 +136,12 @@ export default function TranscriptPage() {
               Deal Sentiment
             </h3>
             
-            <div className="glass-card rounded-xl p-5 border-white/5 bg-background/50">
-              <p className="text-sm text-on-surface-variant text-center py-4">No sentiment data available.</p>
+            <div className="glass-card rounded-xl p-5 border-white/5 bg-background/50 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold text-on-surface">Overall Vibe</span>
+                <span className="text-sm font-bold text-primary px-2 py-1 bg-primary/10 rounded">Positive</span>
+              </div>
+              <p className="text-xs text-on-surface-variant">Client is eager but cautious about the budget constraint and tight timeline.</p>
             </div>
           </motion.div>
 
@@ -141,8 +156,15 @@ export default function TranscriptPage() {
               Key Action Items
             </h3>
             
-            <div className="glass-card rounded-xl p-5 border-white/5 bg-background/50">
-              <p className="text-sm text-on-surface-variant text-center py-4">No action items extracted.</p>
+            <div className="glass-card rounded-xl p-5 border-white/5 bg-background/50 space-y-3">
+              <div className="flex items-start gap-2">
+                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <span className="text-sm text-on-surface-variant">Provide detailed cost breakdown for APAC localized payment gateways.</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <span className="text-sm text-on-surface-variant">Finalize compliance check for Nov 15 launch.</span>
+              </div>
             </div>
           </motion.div>
 
@@ -157,14 +179,20 @@ export default function TranscriptPage() {
               Risk Factors
             </h3>
             
-            <div className="glass-card rounded-xl p-5 border-white/5 bg-background/50">
-              <p className="text-sm text-on-surface-variant text-center py-4">No risk factors identified.</p>
+            <div className="glass-card rounded-xl p-5 border-white/5 bg-background/50 space-y-3">
+              <div className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-error mt-1.5 shrink-0"></div>
+                <span className="text-sm text-on-surface-variant">Data migration delay could push beta launch past Nov 15 target.</span>
+              </div>
             </div>
           </motion.div>
         </div>
         
         <div className="shrink-0 p-6 border-t border-white/5 bg-background/50">
-          <button className="w-full py-3 rounded-lg bg-surface-container-highest border border-white/10 hover:border-primary/50 text-sm font-bold text-on-surface transition-all flex items-center justify-center gap-2">
+          <button 
+            onClick={handleGenerateEmail}
+            className="w-full py-3 rounded-lg bg-surface-container-highest border border-white/10 hover:border-primary/50 text-sm font-bold text-on-surface transition-all flex items-center justify-center gap-2"
+          >
             <Bot className="w-4 h-4 text-primary" />
             Generate Follow-up Email
           </button>
