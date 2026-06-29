@@ -18,7 +18,7 @@ export default function BuilderPage() {
         {/* Left Panel: Revenue Blocks */}
         <aside className="w-full md:w-80 border-r border-white/5 h-[calc(100vh-64px)] overflow-y-auto hide-scrollbar sticky top-16 p-6 flex flex-col gap-6 bg-background/50">
           <div>
-            <h3 className="text-xs font-semibold text-outline uppercase tracking-widest mb-4">Revenue Blocks</h3>
+            <div className="text-xs font-semibold text-outline uppercase tracking-widest mb-4">Revenue Blocks</div>
             <div className="space-y-3">
               {/* Block 1 */}
               <div className="group glass-surface p-4 rounded-xl cursor-grab active:cursor-grabbing hover:border-primary/30 transition-all border border-white/5">

@@ -16,7 +16,7 @@ export function Header({ title }: { title?: string }) {
   return (
     <header className="fixed top-0 right-0 w-full lg:w-[calc(100%-16rem)] z-40 bg-background/40 backdrop-blur-md border-b border-white/5 flex justify-between items-center px-8 py-4 h-16">
       <div className="flex items-center gap-8">
-        <h2 className="text-xl text-on-surface font-bold">{title || "Overview"}</h2>
+        <div className="text-xl text-on-surface font-bold">{title || "Overview"}</div>
       </div>
 
       <div className="flex items-center gap-6">

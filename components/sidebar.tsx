@@ -27,7 +27,7 @@ export function Sidebar() {
   return (
     <aside className="h-screen w-64 fixed left-0 top-0 border-r border-white/10 bg-surface-container-low/80 backdrop-blur-xl flex flex-col p-4 gap-2 z-50">
       <div className="mb-8 px-4">
-        <h1 className="text-2xl font-bold text-primary tracking-tight">Revenue OS</h1>
+        <div className="text-2xl font-bold text-primary tracking-tight">Revenue OS</div>
         <p className="text-[10px] uppercase tracking-[0.2em] text-outline opacity-70">Growth Engine</p>
       </div>
 

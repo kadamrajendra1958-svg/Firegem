@@ -88,7 +88,7 @@ export default function ProposalPreviewPage() {
             </div>
             <div className="max-w-3xl space-y-4 text-on-surface-variant leading-relaxed text-base print:text-black">
               <p>
-                This initiative outlines the strategic roadmap for Global Corp's entrance into emerging secondary markets, leveraging <span className="text-primary font-bold print:text-black">Revenue OS AI Orchestration</span> to bypass traditional operational bottlenecks. By centralizing infrastructure and compliance within our high-performance growth engine, we aim to accelerate time-to-market by 40%.
+                This initiative outlines the strategic roadmap for Global Corp&apos;s entrance into emerging secondary markets, leveraging <span className="text-primary font-bold print:text-black">Revenue OS AI Orchestration</span> to bypass traditional operational bottlenecks. By centralizing infrastructure and compliance within our high-performance growth engine, we aim to accelerate time-to-market by 40%.
               </p>
               <p>
                 The expansion focuses on high-liquidity zones where digital infrastructure is primed for disruption. Our proprietary forecasting model suggests a stabilization period of 4 months followed by an aggressive scale phase.
@@ -260,7 +260,7 @@ export default function ProposalPreviewPage() {
         {/* Export Options Sidebar (Contextual) */}
         <aside className="w-full lg:w-80 shrink-0 sticky top-24 space-y-6 print:hidden">
           <div className="glass-card p-6 rounded-xl border-l-4 border-l-primary bg-surface-container-highest/20 backdrop-blur-xl">
-            <h4 className="font-bold text-base text-on-surface mb-6">Export Actions</h4>
+            <div className="font-bold text-base text-on-surface mb-6">Export Actions</div>
             <div className="space-y-3">
               <button 
                 onClick={() => window.print()}

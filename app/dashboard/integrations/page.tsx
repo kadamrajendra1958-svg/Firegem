@@ -42,7 +42,7 @@ export default function IntegrationsPage() {
             <div className="mb-auto">
               <h3 className="text-xl font-bold text-on-surface mb-2">Google Meet</h3>
               <p className="text-sm text-on-surface-variant font-medium leading-relaxed">
-                Automatically sync and analyze your team's video meetings. Capture transcripts, action items, and sentiment directly in your command center.
+                Automatically sync and analyze your team&apos;s video meetings. Capture transcripts, action items, and sentiment directly in your command center.
               </p>
             </div>
             

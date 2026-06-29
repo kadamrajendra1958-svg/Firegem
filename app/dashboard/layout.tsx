@@ -69,9 +69,9 @@ export default function DashboardLayout({
               <TrendingUp className="text-primary-foreground w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-primary tracking-tight leading-tight">
+              <div className="text-xl font-bold text-primary tracking-tight leading-tight">
                 Revenue OS
-              </h1>
+              </div>
               <p className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">
                 Growth Engine
               </p>
@@ -181,9 +181,9 @@ export default function DashboardLayout({
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h2 className="text-lg md:text-xl text-on-surface font-bold tracking-tight hidden sm:block">
+            <div className="text-lg md:text-xl text-on-surface font-bold tracking-tight hidden sm:block">
               Growth Engine
-            </h2>
+            </div>
             <nav className="hidden lg:flex items-center gap-6">
               <Link
                 href="#"

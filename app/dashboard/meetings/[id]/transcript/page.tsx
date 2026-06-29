@@ -96,7 +96,7 @@ export default function TranscriptPage() {
           {filteredTranscript.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full text-on-surface-variant opacity-60">
               <Search className="w-12 h-12 mb-4" />
-              <p className="font-bold">No results found for "{searchQuery}"</p>
+              <p className="font-bold">No results found for &quot;{searchQuery}&quot;</p>
             </div>
           )}
         </div>

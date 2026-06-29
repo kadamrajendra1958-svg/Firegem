@@ -409,12 +409,11 @@ export default function MarketingPage() {
                   </div>
                   
                   {/* Image Content */}
-                  <div className="relative w-full h-full pt-12">
-                    <Image 
-                      src="https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=2070&auto=format&fit=crop"
-                      alt="Revenue Analytics Command Center"
-                      fill
-                      className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110"
+                  <div className="relative w-full h-full pt-12 bg-black">
+                    <img 
+                      src="https://media.giphy.com/media/3oKIPEqDGUULpEU0aQ/giphy.gif"
+                      alt="Revenue Analytics Command Center GIF"
+                      className="absolute inset-0 object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110"
                       referrerPolicy="no-referrer"
                     />
                     
@@ -596,7 +595,7 @@ export default function MarketingPage() {
             </div>
             <div className="relative glass-card p-10 md:p-16 rounded-[40px] text-center shadow-2xl border-primary/20">
               <p className="text-2xl md:text-3xl font-medium italic mb-12 leading-relaxed text-on-surface">
-                "Revenue OS has transformed our quarterly business reviews. We no longer debate the data; we act on the insights. It's the first platform that actually understands the nuance of an executive closing meeting."
+                &quot;Revenue OS has transformed our quarterly business reviews. We no longer debate the data; we act on the insights. It&apos;s the first platform that actually understands the nuance of an executive closing meeting.&quot;
               </p>
               <div className="flex flex-col items-center">
                 <div className="w-20 h-20 rounded-full border-2 border-primary p-1 mb-4 bg-background">
