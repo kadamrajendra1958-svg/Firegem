@@ -49,9 +49,9 @@ export default function MeetingsPage() {
     if (e.target.files?.length) {
       const file = e.target.files[0];
       
-      const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB to avoid platform limits
+      const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
       if (file.size > MAX_FILE_SIZE) {
-        alert(`File is too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Please upload a file smaller than 10MB to avoid AI Studio platform limits.`);
+        alert(`File is too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Please upload a file smaller than 50MB.`);
         return;
       }
       
@@ -65,29 +65,35 @@ export default function MeetingsPage() {
            fileType = file.name.match(/\.(mp4|webm|ogg)$/i) ? "video/mp4" : "audio/mp3";
         }
         
-        // Fire-and-forget background upload (won't block UI)
+        let fileDownloadUrl = "";
+        
+        // Upload to Firebase Storage first to bypass Vercel's 4.5MB request body limit
         try {
-          import("firebase/storage").then(async ({ ref: storageRef, uploadBytes }) => {
-            const { storage } = await import("@/lib/firebase");
-            const sRef = storageRef(storage, `meetings/${Date.now()}_${file.name}`);
-            uploadBytes(sRef, file).catch(() => {});
-          });
+          const { ref: storageRef, uploadBytes, getDownloadURL } = await import("firebase/storage");
+          const { storage } = await import("@/lib/firebase");
+          const sRef = storageRef(storage, `meetings/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`);
+          const snapshot = await uploadBytes(sRef, file);
+          fileDownloadUrl = await getDownloadURL(snapshot.ref);
         } catch (e) {
-          // ignore background upload error
+          console.error("Firebase upload failed", e);
+          throw new Error("Failed to upload the file to storage. Please check your connection or permissions.");
         }
 
         // Generate transcript
         let transcript = null;
         let analysis = null;
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("filename", file.name);
-        formData.append("fileType", fileType);
         
         try {
           const res = await fetch("/api/transcribe", {
             method: "POST",
-            body: formData
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              fileUrl: fileDownloadUrl,
+              filename: file.name,
+              fileType: fileType
+            })
           });
           
           const responseText = await res.text();
@@ -111,17 +117,17 @@ export default function MeetingsPage() {
           if (data.analysis) {
             analysis = data.analysis;
           }
-        } catch (e) {
+        } catch (e: any) {
           console.error("Transcription generation failed", e);
-          alert("Failed to process the media file. The AI could not generate a transcript. Please try again or check the file format.");
+          alert(e.message || "Failed to process the media file. The AI could not generate a transcript. Please try again or check the file format.");
           setIsUploading(false);
           return;
         }
 
         const newMeeting = {
           client: file.name.split('.')[0] || "Uploaded Recording",
-          lead: analysis?.executiveOverview ? "AI Analyzed" : "Pending Analysis",
-          budget: analysis?.budget || "Pending",
+          lead: analysis?.executiveOverview ? "AI Analyzed" : "Completed",
+          budget: analysis?.budget && analysis.budget !== "Pending" ? analysis.budget : "Not specified",
           status: "Analyzed",
           statusColor: "bg-primary",
           pulse: false,
