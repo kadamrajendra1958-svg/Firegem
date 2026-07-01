@@ -79,9 +79,9 @@ export default function MeetingDetailLayout({ children }: { children: React.Reac
     }
   };
   
-  const displayTitle = meeting?.client || "Nexus Global Q3 Alignment";
-  const displayDate = meeting?.date || "Oct 11, 2023";
-  const displayImage = meeting?.image || "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=200&auto=format&fit=crop";
+  const displayTitle = meeting?.client || "Uploaded Recording";
+  const displayDate = meeting?.date || "";
+  const displayImage = meeting?.image || "";
 
   return (
     <div className="flex-1 h-full overflow-hidden flex flex-col bg-background">
@@ -102,15 +102,19 @@ export default function MeetingDetailLayout({ children }: { children: React.Reac
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div className="flex items-center gap-4 border-l border-white/10 pl-6">
-            <div className="w-12 h-12 rounded-full border border-white/10 overflow-hidden bg-surface-container-highest shrink-0">
-              <Image 
-                src={displayImage}
-                alt="Client"
-                width={48}
-                height={48}
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
+            <div className="w-12 h-12 rounded-full border border-white/10 overflow-hidden bg-surface-container-highest shrink-0 flex items-center justify-center text-primary font-bold text-lg uppercase">
+              {displayImage ? (
+                <Image 
+                  src={displayImage}
+                  alt="Client"
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                displayTitle.substring(0, 2)
+              )}
             </div>
             <div>
               <h1 className="text-xl font-bold text-on-surface tracking-tight">{displayTitle}</h1>

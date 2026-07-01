@@ -15,28 +15,33 @@ import {
   Calendar as CalendarIcon, 
   ShieldAlert, 
   Check, 
-  ChevronRight,
   Zap,
   CheckCircle2
 } from "lucide-react";
 
-const INITIAL_TASKS: any[] = [
-  { id: 1, text: "Draft Q4 expansion proposal", completed: false, owner: "Alex", deadline: "Tomorrow" },
-  { id: 2, text: "Review budget allocation", completed: true, owner: "Sam", deadline: "Oct 15" },
-  { id: 3, text: "Schedule follow-up call with design team", completed: false, owner: "Alex", deadline: "Oct 20" }
-];
-
 export default function MeetingSummaryPage() {
   const params = useParams();
   const id = params.id as string;
-  const [tasks, setTasks] = useState<any[]>(INITIAL_TASKS);
+  const [tasks, setTasks] = useState<any[]>([]);
   const [meeting, setMeeting] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (id && id !== "1") {
+    if (id) {
       getDoc(doc(db, "meetings", id)).then(snap => {
-        if (snap.exists()) setMeeting(snap.data());
+        if (snap.exists()) {
+          const data = snap.data();
+          setMeeting(data);
+          if (data.analysis?.actionItems) {
+            setTasks(data.analysis.actionItems.map((ai: any, i: number) => ({
+              id: i,
+              text: ai.task,
+              owner: ai.owner,
+              deadline: ai.due,
+              completed: false
+            })));
+          }
+        }
         setIsLoading(false);
       });
     } else {
@@ -47,6 +52,16 @@ export default function MeetingSummaryPage() {
   const toggleTask = (id: number) => {
     setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   };
+
+  if (isLoading) {
+    return <div className="flex-1 flex items-center justify-center bg-background"><p>Loading intelligence...</p></div>;
+  }
+
+  if (!meeting) {
+    return <div className="flex-1 flex items-center justify-center bg-background"><p>Meeting not found.</p></div>;
+  }
+
+  const analysis = meeting.analysis || {};
 
   return (
     <div className="flex-1 overflow-y-auto bg-background p-4 md:p-8 relative custom-scrollbar">
@@ -63,8 +78,8 @@ export default function MeetingSummaryPage() {
               <Zap className="w-4 h-4 fill-primary" />
               <span className="text-xs font-bold uppercase tracking-widest">AI Intelligence Layer Active</span>
             </div>
-            <h2 className="text-3xl font-bold text-white tracking-tight">Project Obsidian: Q4 Expansion</h2>
-            <p className="text-sm text-on-surface-variant mt-1 font-medium">Transcript analyzed from Zoom Meeting</p>
+            <h2 className="text-3xl font-bold text-white tracking-tight">{meeting.client || "Uploaded Recording"}</h2>
+            <p className="text-sm text-on-surface-variant mt-1 font-medium">Transcript analyzed</p>
           </div>
         </motion.div>
 
@@ -87,14 +102,11 @@ export default function MeetingSummaryPage() {
               </div>
               <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
                 <span className="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(37,211,102,0.8)]"></span>
-                <span className="text-xs font-bold text-on-surface-variant">Analyzed</span>
+                <span className="text-xs font-bold text-on-surface-variant">{analysis ? "Analyzed" : "Processing"}</span>
               </div>
             </div>
             <p className="text-lg leading-relaxed text-on-surface-variant font-medium text-left py-4">
-              {meeting?.client === "Nexus Global Q3 Alignment" || !meeting ? 
-                "The Nexus Global team is highly aligned on the Q4 expansion strategy. The primary focus is shifting resources toward the APAC region, with a projected 15% increase in budget allocation. Key stakeholders agreed that minimizing friction in onboarding is critical for the launch next month. Overall sentiment was overwhelmingly positive, although timeline constraints remain a notable concern."
-                : `Analysis for ${meeting.client}: The conversation covered multiple key areas. Stakeholders are aligned on general direction, but identified several action items to follow up on before the next milestone. Overall sentiment was extracted as ${meeting.sentiment || "Positive"}.`
-              }
+              {analysis.executiveOverview || "AI is processing the transcript to generate an executive overview..."}
             </p>
             
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-white/5 pt-8">
@@ -102,14 +114,14 @@ export default function MeetingSummaryPage() {
                 <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Sentiment</p>
                 <p className="text-primary font-bold flex items-center gap-2 text-sm">
                   <Smile className="w-4 h-4" />
-                  Positive
+                  {analysis.sentiment || meeting.sentiment || "Unknown"}
                 </p>
               </div>
               <div>
                 <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Priority</p>
                 <p className="text-error font-bold flex items-center gap-2 text-sm">
                   <AlertCircle className="w-4 h-4" />
-                  High
+                  {analysis.priority || "Unknown"}
                 </p>
               </div>
               <div>
@@ -134,20 +146,20 @@ export default function MeetingSummaryPage() {
               <Banknote className="w-8 h-8 text-tertiary" />
               <div className="text-right">
                 <p className="text-xs font-bold text-on-surface-variant">Confidence Score</p>
-                <p className="text-tertiary font-bold text-sm">94%</p>
+                <p className="text-tertiary font-bold text-sm">{analysis.budgetConfidence || "N/A"}</p>
               </div>
             </div>
             <h3 className="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Budget Extraction</h3>
-            <p className="text-3xl font-bold text-on-surface-variant tracking-tight mb-2">$1.2M</p>
+            <p className="text-3xl font-bold text-on-surface-variant tracking-tight mb-2">{analysis.budget || "N/A"}</p>
             
             <div className="space-y-4 mt-8">
               <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
                 <span className="text-sm font-medium text-on-surface-variant">Approval Status</span>
-                <span className="text-primary font-bold text-sm">Approved</span>
+                <span className="text-primary font-bold text-sm">{analysis.approvalStatus || "Pending"}</span>
               </div>
               <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5">
                 <span className="text-sm font-medium text-on-surface-variant">Fiscal Window</span>
-                <span className="text-on-surface-variant font-bold text-sm">Q4 2023</span>
+                <span className="text-on-surface-variant font-bold text-sm">{analysis.fiscalWindow || "N/A"}</span>
               </div>
             </div>
           </motion.div>
@@ -164,9 +176,12 @@ export default function MeetingSummaryPage() {
               <h3 className="text-xl font-bold text-on-surface">Technical Needs</h3>
             </div>
             <div className="py-4 text-left text-on-surface-variant space-y-3">
-              <div className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-secondary mt-1.5"></div><p>Scale cloud infrastructure for APAC servers.</p></div>
-              <div className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-secondary mt-1.5"></div><p>Implement localized payment gateways (Alipay, WeChat Pay).</p></div>
-              <div className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-secondary mt-1.5"></div><p>Ensure GDPR and local compliance.</p></div>
+              {(analysis.technicalNeeds || []).map((need: string, i: number) => (
+                <div key={i} className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-secondary mt-1.5 shrink-0"></div><p>{need}</p></div>
+              ))}
+              {(!analysis.technicalNeeds || analysis.technicalNeeds.length === 0) && (
+                <p className="opacity-50 italic">No specific technical needs identified.</p>
+              )}
             </div>
           </motion.div>
 
@@ -182,8 +197,12 @@ export default function MeetingSummaryPage() {
               <h3 className="text-xl font-bold text-on-surface">Identified Pains</h3>
             </div>
             <div className="py-4 text-left text-on-surface-variant space-y-3">
-              <div className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-error mt-1.5"></div><p>Current API latency is too high for Asian markets.</p></div>
-              <div className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-error mt-1.5"></div><p>Customer support team needs 24/7 coverage.</p></div>
+              {(analysis.identifiedPains || []).map((pain: string, i: number) => (
+                <div key={i} className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-error mt-1.5 shrink-0"></div><p>{pain}</p></div>
+              ))}
+              {(!analysis.identifiedPains || analysis.identifiedPains.length === 0) && (
+                <p className="opacity-50 italic">No specific pain points identified.</p>
+              )}
             </div>
           </motion.div>
 
@@ -200,14 +219,15 @@ export default function MeetingSummaryPage() {
             <h3 className="text-xl font-bold text-on-surface mb-6">Delivery Timeline</h3>
             
             <div className="py-4 text-left text-on-surface-variant space-y-4">
-              <div className="border-l-2 border-primary pl-4 py-1">
-                <p className="text-sm font-bold text-primary">Nov 15</p>
-                <p className="text-sm">Beta launch for APAC region</p>
-              </div>
-              <div className="border-l-2 border-white/10 pl-4 py-1">
-                <p className="text-sm font-bold text-on-surface">Dec 01</p>
-                <p className="text-sm">Full public release</p>
-              </div>
+              {(analysis.deliveryTimeline || []).map((item: any, i: number) => (
+                <div key={i} className={`border-l-2 ${i === 0 ? 'border-primary' : 'border-white/10'} pl-4 py-1`}>
+                  <p className={`text-sm font-bold ${i === 0 ? 'text-primary' : 'text-on-surface'}`}>{item.date}</p>
+                  <p className="text-sm">{item.desc}</p>
+                </div>
+              ))}
+              {(!analysis.deliveryTimeline || analysis.deliveryTimeline.length === 0) && (
+                <p className="opacity-50 italic">No timeline identified.</p>
+              )}
             </div>
           </motion.div>
 
@@ -224,14 +244,15 @@ export default function MeetingSummaryPage() {
             </div>
             
             <div className="py-4 text-left text-on-surface-variant space-y-4">
-               <div className="p-4 bg-white/5 rounded-xl border border-white/10">
-                 <p className="text-sm font-bold text-on-surface mb-1">Competitor Pricing</p>
-                 <p className="text-sm">Client noted that a competitor is offering a 20% discount on first-year licensing.</p>
-               </div>
-               <div className="p-4 bg-white/5 rounded-xl border border-white/10">
-                 <p className="text-sm font-bold text-on-surface mb-1">Data Migration</p>
-                 <p className="text-sm">Concerns raised about downtime during legacy data transfer.</p>
-               </div>
+               {(analysis.crucialObjections || []).map((obj: any, i: number) => (
+                 <div key={i} className="p-4 bg-white/5 rounded-xl border border-white/10">
+                   <p className="text-sm font-bold text-on-surface mb-1">{obj.title}</p>
+                   <p className="text-sm">{obj.desc}</p>
+                 </div>
+               ))}
+               {(!analysis.crucialObjections || analysis.crucialObjections.length === 0) && (
+                 <p className="opacity-50 italic">No specific objections raised.</p>
+               )}
             </div>
           </motion.div>
 
@@ -247,11 +268,13 @@ export default function MeetingSummaryPage() {
                 <CheckCircle2 className="w-6 h-6 text-primary" />
                 <h3 className="text-xl font-bold text-on-surface">Action Items</h3>
               </div>
-              <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">{tasks.length} Total Tasks</span>
+              <span className="text-on-surface-variant text-xs font-bold uppercase tracking-widest">
+                {tasks.length} Total Tasks
+              </span>
             </div>
             
             <div className="space-y-3">
-              {tasks.length > 0 ? tasks.map(task => (
+              {tasks.map((task: any) => (
                 <div 
                   key={task.id}
                   onClick={() => toggleTask(task.id)}
@@ -273,13 +296,12 @@ export default function MeetingSummaryPage() {
                   </div>
                   <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                     <span>{task.owner}</span>
-                    <span className={task.deadline.includes("Tomorrow") ? "text-error" : ""}>{task.deadline}</span>
+                    <span className={task.deadline?.includes("Tomorrow") ? "text-error" : ""}>{task.deadline}</span>
                   </div>
                 </div>
-              )) : (
-                <div className="py-8 text-center text-on-surface-variant">
-                  No action items assigned.
-                </div>
+              ))}
+              {tasks.length === 0 && (
+                <p className="opacity-50 italic">No action items identified.</p>
               )}
             </div>
           </motion.div>

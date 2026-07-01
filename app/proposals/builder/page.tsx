@@ -7,68 +7,10 @@ import { useRouter } from "next/navigation";
 export default function BuilderPage() {
   const router = useRouter();
 
-  const handleAction = () => {
-    router.push("/dashboard/proposals");
-  };
-
   return (
     <>
       <Header title="Q4 Expansion Strategy" />
       <main className="pt-16 min-h-screen flex flex-col md:flex-row relative z-10 w-full overflow-hidden">
-        {/* Left Panel: Revenue Blocks */}
-        <aside className="w-full md:w-80 border-r border-white/5 h-[calc(100vh-64px)] overflow-y-auto hide-scrollbar sticky top-16 p-6 flex flex-col gap-6 bg-background/50">
-          <div>
-            <div className="text-xs font-semibold text-outline uppercase tracking-widest mb-4">Revenue Blocks</div>
-            <div className="space-y-3">
-              {/* Block 1 */}
-              <div className="group glass-surface p-4 rounded-xl cursor-grab active:cursor-grabbing hover:border-primary/30 transition-all border border-white/5">
-                <div className="flex justify-between items-start mb-2">
-                  <BarChart className="text-primary w-5 h-5" />
-                  <PlusIcon className="w-5 h-5 text-outline opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <p className="font-bold text-sm">Executive Summary</p>
-                <p className="text-xs text-outline-variant mt-1">High-level growth projections and strategic alignment.</p>
-              </div>
-
-              {/* Block 2 */}
-              <div className="group glass-surface p-4 rounded-xl cursor-grab active:cursor-grabbing hover:border-primary/30 transition-all border border-white/5">
-                <div className="flex justify-between items-start mb-2">
-                  <CreditCard className="text-tertiary w-5 h-5" />
-                  <PlusIcon className="w-5 h-5 text-outline opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <p className="font-bold text-sm">Pricing Tier Grid</p>
-                <p className="text-xs text-outline-variant mt-1">Interactive SaaS licensing and implementation cost breakdown.</p>
-              </div>
-
-              {/* Block 3 */}
-              <div className="group glass-surface p-4 rounded-xl cursor-grab active:cursor-grabbing hover:border-primary/30 transition-all border border-white/5">
-                <div className="flex justify-between items-start mb-2">
-                  <ShieldCheck className="text-secondary w-5 h-5" />
-                  <PlusIcon className="w-5 h-5 text-outline opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <p className="font-bold text-sm">SLA & Security</p>
-                <p className="text-xs text-outline-variant mt-1">Premium support levels and compliance certification details.</p>
-              </div>
-
-              {/* Block 4 */}
-              <div className="group glass-surface p-4 rounded-xl cursor-grab active:cursor-grabbing hover:border-primary/30 transition-all border border-white/5">
-                <div className="flex justify-between items-start mb-2">
-                  <ChartLine className="text-primary-container w-5 h-5" />
-                  <PlusIcon className="w-5 h-5 text-outline opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <p className="font-bold text-sm">ROI Calculator</p>
-                <p className="text-xs text-outline-variant mt-1">Dynamic data visualization of 3-year value realization.</p>
-              </div>
-            </div>
-          </div>
-          <div className="mt-auto">
-            <div className="bg-primary/5 rounded-xl p-4 border border-primary/10">
-              <p className="text-[10px] font-bold text-primary mb-2 tracking-widest uppercase">PRO TIP</p>
-              <p className="text-xs text-on-surface-variant">Drag blocks into the canvas to auto-populate with your prospect&apos;s CRM data.</p>
-            </div>
-          </div>
-        </aside>
-
         {/* Central Canvas: The Document */}
         <section className="flex-1 bg-surface-container-lowest relative overflow-y-auto flex justify-center p-12 custom-scrollbar">
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
@@ -97,41 +39,76 @@ export default function BuilderPage() {
                 </div>
               </header>
 
-              <article className="space-y-16">
-                <div className="flex flex-col items-center justify-center min-h-[400px] border-2 border-dashed border-white/10 rounded-2xl bg-white/5">
-                  <p className="text-on-surface-variant font-medium text-lg">No content blocks added yet.</p>
-                  <p className="text-on-surface-variant/60 text-sm mt-2">Drag and drop blocks from the left sidebar to build your proposal.</p>
-                </div>
+              <article className="space-y-12 text-on-surface-variant text-left mt-8">
+                <section>
+                  <h3 className="text-2xl font-bold text-on-surface mb-4">1. Executive Summary</h3>
+                  <p className="leading-relaxed">
+                    Based on our recent discussions, Global Horizon Tech is positioned to significantly expand operations into the APAC region during Q4. To support this, you require a scalable, localized infrastructure that reduces latency and ensures compliance with regional data regulations. Our platform provides the high-availability framework and localized payment integrations necessary to capture this new market seamlessly.
+                  </p>
+                </section>
+
+                <section>
+                  <h3 className="text-2xl font-bold text-on-surface mb-4">2. Proposed Solution</h3>
+                  <ul className="space-y-3 list-none pl-0">
+                    <li className="flex gap-3"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0"></div><p><strong>Cloud Scaling & Localization:</strong> Deployment of multi-zone APAC servers to guarantee sub-50ms latency for end users.</p></li>
+                    <li className="flex gap-3"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0"></div><p><strong>Payment Gateway Integration:</strong> Native support for regional methods including Alipay and WeChat Pay.</p></li>
+                    <li className="flex gap-3"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0"></div><p><strong>Security & Compliance:</strong> Full GDPR and localized data residency compliance auditing.</p></li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h3 className="text-2xl font-bold text-on-surface mb-4">3. Investment & Pricing</h3>
+                  <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+                    <table className="w-full text-left text-sm">
+                      <thead className="bg-white/5 border-b border-white/10 text-on-surface">
+                        <tr>
+                          <th className="p-4 font-bold">Item</th>
+                          <th className="p-4 font-bold">Description</th>
+                          <th className="p-4 font-bold text-right">Cost</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/10">
+                        <tr>
+                          <td className="p-4 font-medium text-on-surface">Enterprise Licensing</td>
+                          <td className="p-4">Annual platform license for up to 500 APAC users</td>
+                          <td className="p-4 text-right font-medium">$850,000</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-medium text-on-surface">Implementation & Setup</td>
+                          <td className="p-4">Dedicated engineering squad (12 weeks)</td>
+                          <td className="p-4 text-right font-medium">$250,000</td>
+                        </tr>
+                        <tr>
+                          <td className="p-4 font-medium text-on-surface">Premium Support</td>
+                          <td className="p-4">24/7 dedicated account manager and SLA guarantee</td>
+                          <td className="p-4 text-right font-medium">$100,000</td>
+                        </tr>
+                      </tbody>
+                      <tfoot className="bg-primary/10 border-t border-primary/20 text-primary">
+                        <tr>
+                          <td colSpan={2} className="p-4 font-bold text-right text-base">Total Investment (Year 1)</td>
+                          <td className="p-4 font-bold text-right text-base text-on-surface">$1,200,000</td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </section>
+                
+                <section>
+                  <h3 className="text-2xl font-bold text-on-surface mb-4">4. Next Steps</h3>
+                  <p className="leading-relaxed mb-6">
+                    To proceed with the November 15th Beta launch timeline, we require approval by October 15th. Upon signature, our implementation team will immediately commence the onboarding protocol.
+                  </p>
+                  <button className="bg-primary text-primary-foreground font-bold px-8 py-4 rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)]" onClick={(e) => { e.preventDefault(); router.push("/dashboard/proposals"); }}>
+                    Approve Proposal & Sign
+                  </button>
+                </section>
               </article>
             </div>
           </div>
         </section>
 
-        {/* Right Panel: Contextual Actions */}
-        <aside className="hidden xl:flex w-16 border-l border-white/5 h-[calc(100vh-64px)] sticky top-16 flex-col items-center py-6 gap-6 bg-background/50">
-          <ActionBtn icon={MessageSquare} />
-          <ActionBtn icon={Palette} />
-          <ActionBtn icon={Network} />
-          <div className="w-6 h-[1px] bg-white/10 my-2"></div>
-          <ActionBtn icon={Users} />
-        </aside>
       </main>
     </>
-  );
-}
-
-function PlusIcon({ className }: { className?: string }) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/>
-    </svg>
-  );
-}
-
-function ActionBtn({ icon: Icon }: { icon: any }) {
-  return (
-    <button className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/10 text-on-surface-variant hover:text-primary transition-all active:scale-90">
-      <Icon className="w-5 h-5" />
-    </button>
   );
 }

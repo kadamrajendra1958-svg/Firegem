@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createProposal } from "@/lib/actions";
 import { Header } from "@/components/header";
 import { Building, Target, DollarSign, Activity, Settings2, BarChart2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -22,11 +21,12 @@ export default function NewProposalPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulating API call since there is no backend action provided that works fully without DB
+    // We will push to builder
     setTimeout(() => {
       router.push("/proposals/builder");
     }, 800);
   };
+
 
   return (
     <>

@@ -9,11 +9,12 @@ import {
   Filter, 
   Calendar, 
   PlayCircle, 
-  MoreVertical 
+  MoreVertical,
+  Trash2
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { db } from "@/lib/firebase";
-import { collection, addDoc, getDocs, orderBy, query, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, getDocs, orderBy, query, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 
 export default function MeetingsPage() {
   const [meetings, setMeetings] = useState<any[]>([]);
@@ -33,47 +34,117 @@ export default function MeetingsPage() {
 
   const [isUploading, setIsUploading] = useState(false);
 
+  const handleDeleteMeeting = async (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    if (confirm("Are you sure you want to delete this meeting?")) {
+      try {
+        await deleteDoc(doc(db, "meetings", id));
+      } catch (error) {
+        console.error("Error deleting meeting:", error);
+      }
+    }
+  };
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       const file = e.target.files[0];
+      
+      const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB to avoid platform limits
+      if (file.size > MAX_FILE_SIZE) {
+        alert(`File is too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Please upload a file smaller than 10MB to avoid AI Studio platform limits.`);
+        return;
+      }
+      
       setIsUploading(true);
       
       try {
-        let fileUrl = "";
-        let fileType = file.type.startsWith("video") ? "video" : "audio";
+        // Instant local preview
+        const fileUrl = URL.createObjectURL(file);
+        let fileType = file.type;
+        if (!fileType || fileType === "audio" || fileType === "video") {
+           fileType = file.name.match(/\.(mp4|webm|ogg)$/i) ? "video/mp4" : "audio/mp3";
+        }
+        
+        // Fire-and-forget background upload (won't block UI)
+        try {
+          import("firebase/storage").then(async ({ ref: storageRef, uploadBytes }) => {
+            const { storage } = await import("@/lib/firebase");
+            const sRef = storageRef(storage, `meetings/${Date.now()}_${file.name}`);
+            uploadBytes(sRef, file).catch(() => {});
+          });
+        } catch (e) {
+          // ignore background upload error
+        }
+
+        // Generate transcript
+        let transcript = null;
+        let analysis = null;
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("filename", file.name);
+        formData.append("fileType", fileType);
         
         try {
-          const { ref: storageRef, uploadBytes, getDownloadURL } = await import("firebase/storage");
-          const { storage } = await import("@/lib/firebase");
-          const sRef = storageRef(storage, `meetings/${Date.now()}_${file.name}`);
-          await uploadBytes(sRef, file);
-          fileUrl = await getDownloadURL(sRef);
-        } catch (storageError) {
-          console.error("Storage upload failed (possibly rules). Falling back to local URL.", storageError);
-          fileUrl = URL.createObjectURL(file); // Fallback for local preview if storage fails
+          const res = await fetch("/api/transcribe", {
+            method: "POST",
+            body: formData
+          });
+          
+          const responseText = await res.text();
+          if (!res.ok) {
+            throw new Error(`Server returned ${res.status}: ${responseText.substring(0, 100)}`);
+          }
+          
+          let data;
+          try {
+            data = JSON.parse(responseText);
+          } catch (err) {
+            if (responseText.includes("<!doctype html>")) {
+              throw new Error("The platform intercepted the request (likely due to file size or API limits). Please ensure your file is small enough or your API key has sufficient quota.");
+            }
+            throw new Error(`Invalid JSON response: ${responseText.substring(0, 100)}`);
+          }
+          
+          if (data.transcript) {
+            transcript = data.transcript;
+          }
+          if (data.analysis) {
+            analysis = data.analysis;
+          }
+        } catch (e) {
+          console.error("Transcription generation failed", e);
+          alert("Failed to process the media file. The AI could not generate a transcript. Please try again or check the file format.");
+          setIsUploading(false);
+          return;
         }
 
         const newMeeting = {
           client: file.name.split('.')[0] || "Uploaded Recording",
-          lead: "Pending Analysis",
-          budget: "Pending",
+          lead: analysis?.executiveOverview ? "AI Analyzed" : "Pending Analysis",
+          budget: analysis?.budget || "Pending",
           status: "Analyzed",
           statusColor: "bg-primary",
           pulse: false,
           date: new Date().toLocaleDateString(),
-          image: "https://picsum.photos/seed/" + Date.now() + "/200/200",
           createdAt: new Date(),
           fileUrl,
           fileType,
-          sentiment: "Positive",
-          sentimentScore: 85,
+          transcript,
+          analysis,
+          sentiment: analysis?.sentiment || "Unknown",
+          sentimentScore: 0,
         };
         
-        await addDoc(collection(db, "meetings"), newMeeting);
-        alert("Meeting uploaded successfully!");
+        try {
+          const docRef = await addDoc(collection(db, "meetings"), newMeeting);
+          // Snapshot listener will pick this up if successful
+        } catch (error) {
+          console.error("Error adding meeting to Firestore (fallback to local state): ", error);
+          // Fallback: manually update state so the user sees it immediately even if Firestore rules block it
+          setMeetings(prev => [{ ...newMeeting, id: Date.now().toString() }, ...prev]);
+        }
       } catch (error) {
-        console.error("Error adding meeting: ", error);
-        alert("Failed to upload meeting.");
+        console.error("Error processing meeting: ", error);
       } finally {
         setIsUploading(false);
         if (e.target) e.target.value = ''; // reset input
@@ -211,15 +282,8 @@ export default function MeetingsPage() {
                 >
                 <div className="flex items-center gap-5 w-full md:w-[35%] shrink-0">
                   <div className="relative shrink-0">
-                    <div className="w-14 h-14 rounded-full border-2 border-white/10 overflow-hidden bg-surface-container-highest">
-                      <Image 
-                        src={meeting.image}
-                        alt={meeting.client}
-                        width={56}
-                        height={56}
-                        className="w-full h-full object-cover"
-                        referrerPolicy="no-referrer"
-                      />
+                    <div className="w-14 h-14 rounded-full border-2 border-white/10 overflow-hidden bg-surface-container-highest flex items-center justify-center text-primary font-bold text-xl uppercase">
+                      {meeting.client ? meeting.client.substring(0, 2) : "M"}
                     </div>
                     {meeting.id === 1 && (
                       <div className="absolute -bottom-1 -right-1 bg-primary w-4 h-4 rounded-full border-2 border-background shadow-[0_0_8px_rgba(37,211,102,0.8)]"></div>
@@ -254,8 +318,11 @@ export default function MeetingsPage() {
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant group-hover:bg-primary/20 group-hover:text-primary group-hover:border-primary/30 transition-all">
                       <PlayCircle className="w-5 h-5" />
                     </div>
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-on-surface transition-all">
-                      <MoreVertical className="w-5 h-5" />
+                    <div 
+                      className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/10 text-on-surface-variant hover:bg-error/20 hover:text-error hover:border-error/30 transition-all"
+                      onClick={(e) => handleDeleteMeeting(meeting.id, e)}
+                    >
+                      <Trash2 className="w-5 h-5" />
                     </div>
                   </div>
                 </div>

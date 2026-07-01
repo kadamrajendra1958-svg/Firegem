@@ -21,17 +21,16 @@ export default function ProposalGenerationPage() {
             </p>
           </motion.div>
           
-          <Link href="/proposals/builder">
-            <motion.button 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap"
-            >
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            <Link href="/proposals/builder" className="bg-primary text-primary-foreground font-bold px-6 py-3 rounded-lg flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_20px_rgba(37,211,102,0.15)] whitespace-nowrap">
               <FileText className="w-5 h-5" />
               <span className="text-sm tracking-wide">New Proposal</span>
-            </motion.button>
-          </Link>
+            </Link>
+          </motion.div>
         </div>
 
         <div className="flex flex-col items-center justify-center mt-12">
