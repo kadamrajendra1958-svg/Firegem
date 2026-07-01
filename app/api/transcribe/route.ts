@@ -12,84 +12,46 @@ export async function POST(req: NextRequest) {
     
     // Parse JSON
     const body = await req.json();
-    const { fileUrl, filename, fileType: incomingFileType } = body;
+    const { geminiFileName, filename, fileType: incomingFileType } = body;
     
     let fileType = incomingFileType || "video/mp4";
     if (fileType === "audio") fileType = "audio/mp3";
     if (fileType === "video") fileType = "video/mp4";
 
-    if (!fileUrl) {
-      return NextResponse.json({ error: "No fileUrl provided" }, { status: 400 });
+    if (!geminiFileName) {
+      return NextResponse.json({ error: "No geminiFileName provided" }, { status: 400 });
     }
 
-    // Download the file from Firebase Storage
-    const fileRes = await fetch(fileUrl);
-    if (!fileRes.ok) {
-      return NextResponse.json({ error: `Failed to fetch file from storage: ${fileRes.status}` }, { status: 400 });
+    // Wait for processing if it's a video
+    let uploadResp;
+    let attempts = 0;
+    while (attempts < 20) {
+      uploadResp = await ai.files.get({ name: geminiFileName });
+      if (uploadResp.state !== 'PROCESSING') {
+        break;
+      }
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      attempts++;
     }
-    
-    const arrayBuffer = await fileRes.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    
-    // Check file size (use inlineData for < 15MB to avoid Vercel timeouts, use File API for >= 15MB)
-    const fileSizeMB = buffer.length / (1024 * 1024);
-    let contents = [];
 
-    if (fileSizeMB < 15) {
-      const base64Data = buffer.toString("base64");
-      contents = [
-        {
-          inlineData: {
-            mimeType: fileType,
-            data: base64Data
-          }
-        },
-        `Analyze this media file. IMPORTANT: The audio may be in any language (including Hindi). 
+    if (!uploadResp || uploadResp.state === 'FAILED') {
+      throw new Error("File processing failed on Gemini.");
+    }
+
+    const contents = [
+      {
+        fileData: {
+          mimeType: uploadResp.mimeType || fileType,
+          fileUri: uploadResp.uri
+        }
+      },
+      `Analyze this media file. IMPORTANT: The audio may be in any language (including Hindi). 
 1. Provide a literal, accurate transcript of what is spoken. Translate non-English speech into English. If it's mixed language, translate all of it to English.
 2. Provide a detailed analysis including executive overview, budget, action items, technical needs, pains, objections, and delivery timeline based ONLY on the file contents.
 If any field is completely missing or unknown from the conversation, use "Not specified" or "Unknown" instead of leaving it empty.
 
 Output strictly as a JSON object with "transcript" and "analysis" keys.`
-      ];
-    } else {
-      const tempFilePath = path.join(os.tmpdir(), `${Date.now()}-${(filename || 'recording').replace(/[^a-zA-Z0-9.-]/g, '_')}`);
-      await writeFile(tempFilePath, buffer);
-
-      let uploadResp = await ai.files.upload({
-        file: tempFilePath,
-        config: { mimeType: fileType }
-      });
-
-      try {
-        await unlink(tempFilePath);
-      } catch (e) {
-        console.error("Failed to delete temp file:", e);
-      }
-
-      while (uploadResp.state === 'PROCESSING') {
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        uploadResp = await ai.files.get({ name: uploadResp.name! });
-      }
-
-      if (uploadResp.state === 'FAILED') {
-        throw new Error("File processing failed on Gemini.");
-      }
-
-      contents = [
-        {
-          fileData: {
-            mimeType: uploadResp.mimeType || fileType,
-            fileUri: uploadResp.uri
-          }
-        },
-        `Analyze this media file. IMPORTANT: The audio may be in any language (including Hindi). 
-1. Provide a literal, accurate transcript of what is spoken. Translate non-English speech into English. If it's mixed language, translate all of it to English.
-2. Provide a detailed analysis including executive overview, budget, action items, technical needs, pains, objections, and delivery timeline based ONLY on the file contents.
-If any field is completely missing or unknown from the conversation, use "Not specified" or "Unknown" instead of leaving it empty.
-
-Output strictly as a JSON object with "transcript" and "analysis" keys.`
-      ];
-    }
+    ];
 
     // Generate content
     const response = await ai.models.generateContent({

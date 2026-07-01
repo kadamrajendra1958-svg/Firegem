@@ -65,18 +65,42 @@ export default function MeetingsPage() {
            fileType = file.name.match(/\.(mp4|webm|ogg)$/i) ? "video/mp4" : "audio/mp3";
         }
         
-        let fileDownloadUrl = "";
+        let geminiFileName = "";
         
-        // Upload to Firebase Storage first to bypass Vercel's 4.5MB request body limit
         try {
-          const { ref: storageRef, uploadBytes, getDownloadURL } = await import("firebase/storage");
-          const { storage } = await import("@/lib/firebase");
-          const sRef = storageRef(storage, `meetings/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`);
-          const snapshot = await uploadBytes(sRef, file);
-          fileDownloadUrl = await getDownloadURL(snapshot.ref);
-        } catch (e) {
-          console.error("Firebase upload failed", e);
-          throw new Error("Failed to upload the file to storage. Please check your connection or permissions.");
+          // 1. Get resumable upload URL from our backend
+          const urlRes = await fetch("/api/upload-url", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              filename: file.name,
+              mimeType: fileType,
+              sizeBytes: file.size
+            })
+          });
+          
+          if (!urlRes.ok) throw new Error("Failed to get upload URL");
+          const { uploadUrl } = await urlRes.json();
+          
+          // 2. Upload file bytes directly to Gemini (bypasses Vercel 4.5MB limit & Firebase Storage CORS)
+          const putRes = await fetch(uploadUrl, {
+            method: "PUT",
+            headers: {
+              "X-Goog-Upload-Command": "upload, finalize",
+              "X-Goog-Upload-Offset": "0"
+            },
+            body: file
+          });
+          
+          if (!putRes.ok) throw new Error("Failed to upload file bytes directly");
+          
+          const uploadData = await putRes.json();
+          geminiFileName = uploadData.file.name;
+        } catch (e: any) {
+          console.error("Direct upload failed", e);
+          alert(e.message || "Failed to upload the file. Please check your connection.");
+          setIsUploading(false);
+          return;
         }
 
         // Generate transcript
@@ -90,7 +114,7 @@ export default function MeetingsPage() {
               "Content-Type": "application/json"
             },
             body: JSON.stringify({
-              fileUrl: fileDownloadUrl,
+              geminiFileName: geminiFileName,
               filename: file.name,
               fileType: fileType
             })
